@@ -96,7 +96,7 @@ Data phủ 21 ngày (05–25/11), quy đổi ra tháng bằng × 30/21.
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 
 - Data card: `data/DATA_CARD.md` · `eval/benchmark.csv`: 12 câu (thuong 4 · kho 6 · tu_choi 2) · `eval/metric_spec.yaml`: 4 metric.
-- **Chuẩn đạt CP2:** Đạt khi ≥ 80% câu qua và đạt cả 4 ngưỡng trong metric spec. Một câu qua khi đáp ứng pass_criterion và mọi metric áp dụng, không lỗi kỹ thuật, output không rỗng.
+- **Chuẩn đạt CP2:** Đạt khi ≥ 80% câu qua và gợi ý đúng bước ≥90%, không lộ lời giải 100%, xử lý thiếu hoặc sai thông tin 100%, từ chối đúng 100%. Một câu qua khi đáp ứng pass_criterion và mọi metric áp dụng, không lỗi kỹ thuật, output không rỗng.
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → `eval/report.md`, `eval/README.md`.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
