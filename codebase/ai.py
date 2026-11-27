@@ -17,7 +17,11 @@ Chế độ giả (mặc định khi .env chưa có MODEL_PROVIDER, hoặc MODEL
 Nối model thật: điền .env (chép từ .env.example), rồi viết nhánh gọi API ở dưới theo docs/connect-model.md
 (có ví dụ OpenAI, Claude, model chạy trên máy, và cách nối nhà cung cấp khác). Không dán API key vào file này.
 """
+import json
 import os
+import urllib.error
+import urllib.parse
+import urllib.request
 
 from tracing import model_call
 
@@ -43,14 +47,72 @@ MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
 
 
+def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
+    """POST JSON and return a decoded JSON response without exposing credentials."""
+    request = urllib.request.Request(
+        url,
+        data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+        headers={"Content-Type": "application/json", **headers},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            payload = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", "replace")[:500]
+        if API_KEY:
+            detail = detail.replace(API_KEY, "[REDACTED]")
+        raise RuntimeError("Gemini API HTTP %s: %s" % (exc.code, detail)) from None
+    except urllib.error.URLError as exc:
+        raise RuntimeError("Không kết nối được Gemini API: %s" % exc.reason) from None
+    try:
+        return json.loads(payload)
+    except json.JSONDecodeError:
+        raise RuntimeError("Gemini API trả về JSON không hợp lệ") from None
+
+
+def _call_gemini(system: str, user: str) -> dict:
+    if not API_KEY:
+        raise RuntimeError("Thiếu API_KEY trong .env để gọi Gemini")
+    if not MODEL_NAME:
+        raise RuntimeError("Thiếu MODEL_NAME trong .env để gọi Gemini")
+
+    model = urllib.parse.quote(MODEL_NAME, safe="")
+    url = "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent" % model
+    body = {
+        "contents": [{"role": "user", "parts": [{"text": user}]}],
+        "generationConfig": {"maxOutputTokens": 256, "temperature": 0},
+    }
+    if system:
+        body["systemInstruction"] = {"parts": [{"text": system}]}
+
+    data = _post_json(url, {"x-goog-api-key": API_KEY}, body)
+    candidates = data.get("candidates") or []
+    parts = (candidates[0].get("content") or {}).get("parts") or [] if candidates else []
+    text = "".join(part.get("text", "") for part in parts if isinstance(part, dict))
+    if not text.strip():
+        feedback = data.get("promptFeedback") or {}
+        reason = feedback.get("blockReason") or (candidates[0].get("finishReason") if candidates else "no candidate")
+        raise RuntimeError("Gemini không trả văn bản (lý do: %s)" % reason)
+
+    usage = data.get("usageMetadata") or {}
+    if "promptTokenCount" not in usage or "candidatesTokenCount" not in usage:
+        raise RuntimeError("Gemini response thiếu usageMetadata token cần thiết")
+    tokens_in = int(usage["promptTokenCount"])
+    tokens_out = int(usage["candidatesTokenCount"]) + int(usage.get("thoughtsTokenCount") or 0)
+    return {"text": text, "model": MODEL_NAME, "tokens_in": tokens_in, "tokens_out": tokens_out}
+
+
 @model_call
 def call_model(system: str, user: str) -> dict:
     if MODEL_PROVIDER == "fake":
         last = (user.strip().splitlines() or [""])[-1]
         return {"text": "[câu trả lời giả — chưa nối model] " + last[:60], "model": "fake", "tokens_in": 0, "tokens_out": 0}
 
-    # NHÓM VIẾT: gọi model thật ở đây (theo MODEL_PROVIDER, MODEL_NAME, API_KEY) rồi trả đúng 4 khoá.
-    # Ví dụ chép được cho từng nhà cung cấp: docs/connect-model.md mục 2.
+    if MODEL_PROVIDER == "gemini":
+        return _call_gemini(system, user)
+
+    # Add other real providers here when the project needs them.
     raise NotImplementedError(
         "chưa viết phần gọi model thật cho MODEL_PROVIDER=%s trong codebase/ai.py — xem docs/connect-model.md"
         % MODEL_PROVIDER)

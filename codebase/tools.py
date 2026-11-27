@@ -1,7 +1,8 @@
-"""Read-only lookup of the prototype lab's practice prompts and hints."""
+"""Read-only retrieval and solution-leak checks for synthetic lab content."""
 import json
 import os
 import re
+import unicodedata
 
 from tracing import tool
 
@@ -9,51 +10,104 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LABS_PATH = os.path.join(ROOT, "data", "labs.json")
 
 
-def _tokens(text):
-    return set(re.findall(r"[\w-]+", str(text).lower(), flags=re.UNICODE))
+def _normalize(text):
+    decomposed = unicodedata.normalize("NFKD", str(text).casefold())
+    plain = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+    plain = plain.replace("đ", "d")
+    return " ".join(re.findall(r"[\w]+", plain, flags=re.UNICODE))
+
+
+def _load_labs():
+    try:
+        with open(LABS_PATH, encoding="utf-8") as source:
+            data = json.load(source)
+    except (OSError, ValueError) as exc:
+        raise RuntimeError("Không đọc được data/labs.json: %s" % exc) from None
+    labs = data.get("labs") if isinstance(data, dict) else None
+    if not isinstance(labs, list):
+        raise RuntimeError("data/labs.json cần có danh sách labs")
+    return labs
 
 
 @tool
-def search_lab_step(query: str) -> list:
-    """Tra gợi ý cho bước mini lab từ dữ liệu mẫu.
+def find_lab(message: str):
+    """Tìm lab được nêu rõ trong tin nhắn.
 
-    Input: mô tả chỗ kẹt hoặc mã bước (str).
-    Output: tối đa 3 đoạn gồm mã, yêu cầu, gợi ý và nguồn; không trả đáp án.
+    Input: tin nhắn học viên (str).
+    Output: dict gồm lab_key, tên lab, số bước; hoặc dict rỗng nếu không tìm thấy.
     Tác động ngoài: không; chỉ đọc data/labs.json.
     """
-    if not isinstance(query, str) or not query.strip():
-        return []
+    normalized = _normalize(message)
+    if not normalized:
+        return {}
+    matches = []
+    for lab in _load_labs():
+        candidates = [lab.get("lab_key", "")] + lab.get("aliases", [])
+        for candidate in candidates:
+            term = _normalize(candidate)
+            if term and re.search(r"(?<!\w)%s(?!\w)" % re.escape(term), normalized):
+                matches.append(lab)
+                break
+    if len(matches) != 1:
+        return {}
+    lab = matches[0]
+    return {
+        "lab_key": lab["lab_key"],
+        "name": lab["title"],
+        "step_count": len(lab.get("steps", [])),
+    }
 
-    try:
-        with open(LABS_PATH, encoding="utf-8") as f:
-            data = json.load(f)
-    except (OSError, ValueError) as exc:
-        raise RuntimeError("Không đọc được dữ liệu lab mẫu: %s" % exc)
 
-    query_tokens = _tokens(query)
-    # Explicit step numbers take priority (e.g. "bước 3").
-    step_numbers = set(re.findall(r"(?:bước|step)\s*(\d+)", query.lower()))
-    if not step_numbers:
-        # Still identify an explicitly numbered step if a console mangles accents.
-        step_numbers = set(re.findall(r"\d+", query))
-    ranked = []
-    for item in data.get("steps", []):
-        searchable = " ".join((item.get("code", ""), item.get("title", ""), item.get("task", "")))
-        words = _tokens(searchable)
-        score = len(query_tokens & words)
-        if step_numbers and str(item.get("step")) in step_numbers:
-            score += 10
-        if score:
-            ranked.append((score, item))
+@tool
+def get_lab_step(lab_key: str):
+    """Lấy đề, gợi ý và lỗi hay gặp mà model được phép xem.
 
-    ranked.sort(key=lambda pair: (-pair[0], pair[1].get("step", 0)))
-    return [
-        {
-            "code": item["code"],
-            "title": item["title"],
-            "task": item["task"],
-            "hint": item["hint"],
-            "source": item.get("source", ""),
+    Input: mã lab (str).
+    Output: dict lab_key, tên, số bước và bước đã lọc; không chứa lời giải hay leak_signals.
+    Tác động ngoài: không; chỉ đọc data/labs.json.
+    """
+    for lab in _load_labs():
+        if lab.get("lab_key") != lab_key:
+            continue
+        return {
+            "lab_key": lab["lab_key"],
+            "name": lab["title"],
+            "step_count": len(lab.get("steps", [])),
+            "steps": [
+                {
+                    "number": step["number"],
+                    "task": step["task"],
+                    "hint_level_1": step["hint_level_1"],
+                    "hint_level_2": step["hint_level_2"],
+                    "common_errors": step.get("common_errors", []),
+                }
+                for step in lab.get("steps", [])
+            ],
         }
-        for _, item in ranked[:3]
-    ]
+    return {}
+
+
+@tool
+def check_leak(text: str, lab_key: str) -> list:
+    """So đầu ra với lời giải ẩn và tín hiệu lộ lời giải của lab.
+
+    Input: chữ sắp gửi (str) và mã lab (str).
+    Output: danh sách chuỗi mô tả dấu hiệu trùng; danh sách rỗng nghĩa là chưa phát hiện.
+    Tác động ngoài: không; chỉ đọc data/labs.json.
+    """
+    output = _normalize(text)
+    if not output:
+        return []
+    leaks = []
+    for lab in _load_labs():
+        if lab.get("lab_key") != lab_key:
+            continue
+        for step in lab.get("steps", []):
+            solution = _normalize(step.get("solution", ""))
+            if solution and solution in output:
+                leaks.append("bước %d: trùng lời giải" % step["number"])
+            for signal in step.get("leak_signals", []):
+                normalized_signal = _normalize(signal)
+                if normalized_signal and normalized_signal in output:
+                    leaks.append("bước %d: trùng dấu hiệu lộ" % step["number"])
+    return leaks

@@ -1,77 +1,109 @@
 {
-  "dataset_id": "synthetic-prompt-lab-v1",
+  "dataset_id": "synthetic-prompt-labs-v2",
   "label": "synthetic",
-  "description": "Bộ minh họa tự soạn để chạy thử luồng gợi ý. Không phải nội dung chính thức của khóa học hay dữ liệu do Hùng cung cấp.",
+  "description": "Tự soạn theo tên các lab có tỷ lệ không hoàn thành cao trong evidence/data-mining.md. Tên lab dựa trên dữ liệu hành vi; nội dung bài, gợi ý và lời giải đều là minh họa, không phải đề chính thức.",
   "generation": {
-    "method": "Tự soạn thủ công 8 yêu cầu mini lab và gợi ý từng bước, theo lát cắt hỗ trợ học prompt và LLM trong spec.md.",
+    "method": "Biên soạn thủ công 8 bước qua ba lab synthetic, theo lát cắt A6 và cấu trúc rủi ro trong spec.md §4.",
     "seed": null,
-    "reviewer": "Codex, theo phân công phần bản chạy thử của Phạm Lê Chuẩn",
+    "reviewer": "Codex hỗ trợ phần việc Phạm Lê Chuẩn; nội dung cần Chuẩn xác nhận trước demo",
     "manually_reviewed_steps": 8
   },
-  "steps": [
+  "labs": [
     {
-      "step": 1,
-      "code": "SYN-PROMPT-01",
-      "title": "Phân biệt system và user",
-      "task": "Xác định hướng dẫn nào nên đặt ở system và yêu cầu nào thuộc về user trong một cuộc hội thoại.",
-      "hint": "Tách quy tắc ổn định về vai trò/phạm vi khỏi câu hỏi cụ thể của lượt này; thử phân loại từng câu trước khi sửa.",
-      "source": "synthetic-prompt-lab-v1"
+      "lab_key": "d01-lab-ban-la-llm",
+      "title": "Bản chất của LLM (bản minh họa)",
+      "aliases": ["ban la llm"],
+      "source_basis": "Tên lab và tỷ lệ không hoàn thành 31/72 lấy từ evidence/data-mining.md; nội dung các bước synthetic.",
+      "steps": [
+        {
+          "number": 1,
+          "task": "Quan sát một ví dụ đầu vào và phần văn bản mô hình tạo ra; mô tả điều gì trong ngữ cảnh có thể ảnh hưởng phần tiếp theo.",
+          "hint_level_1": "Thử giữ nguyên yêu cầu, chỉ thay một chi tiết của ngữ cảnh rồi so sánh hai phần văn bản được tạo.",
+          "hint_level_2": "Ghi lại chi tiết đã đổi và phần đầu ra đổi theo; từ đó mô tả mô hình dựa vào mẫu trong ngữ cảnh để tạo tiếp văn bản.",
+          "common_errors": ["Cho rằng mô hình tra một đáp án cố định cho mọi câu hỏi.", "Thay nhiều yếu tố cùng lúc nên không biết yếu tố nào làm kết quả đổi."],
+          "solution": "Giữ yêu cầu giống nhau, thay một chi tiết ngữ cảnh, so sánh đầu ra và kết luận rằng LLM tạo tiếp văn bản dựa trên mẫu đã học cùng ngữ cảnh hiện tại.",
+          "leak_signals": ["LLM tạo tiếp văn bản dựa trên mẫu đã học cùng ngữ cảnh hiện tại", "thay một chi tiết ngữ cảnh rồi so sánh đầu ra"]
+        },
+        {
+          "number": 2,
+          "task": "Dùng cùng một yêu cầu với hai ngữ cảnh khác nhau, rồi giải thích vì sao phần tiếp theo có thể khác.",
+          "hint_level_1": "Tạo hai ngữ cảnh ngắn nhưng khác nhau; giữ nguyên câu yêu cầu để phép so sánh công bằng.",
+          "hint_level_2": "Đối chiếu từ ngữ hoặc chi tiết xuất hiện ở mỗi đầu ra với ngữ cảnh tương ứng, rồi mô tả ảnh hưởng quan sát được.",
+          "common_errors": ["Đổi cả câu yêu cầu lẫn ngữ cảnh.", "Khẳng định một đầu ra là sự thật chỉ vì nó nghe hợp lý."],
+          "solution": "Giữ nguyên yêu cầu, thay ngữ cảnh, ghi lại khác biệt ở đầu ra và giải thích khác biệt dựa trên thông tin mới được cung cấp.",
+          "leak_signals": ["giữ nguyên yêu cầu, thay ngữ cảnh, ghi lại khác biệt ở đầu ra", "giải thích khác biệt dựa trên thông tin mới được cung cấp"]
+        }
+      ]
     },
     {
-      "step": 2,
-      "code": "SYN-PROMPT-02",
-      "title": "Bổ sung bối cảnh còn thiếu",
-      "task": "Cải thiện một prompt đang yêu cầu mô hình viết câu trả lời nhưng chưa nêu người đọc hoặc mục đích.",
-      "hint": "Trước khi viết lại, ghi ra hai thông tin người làm cần biết về người đọc và kết quả mong muốn.",
-      "source": "synthetic-prompt-lab-v1"
+      "lab_key": "d01-lab-xep-ban-context",
+      "title": "Xếp bàn context (bản minh họa)",
+      "aliases": ["xep ban context"],
+      "source_basis": "Tên lab có trong evidence/data-mining.md; nội dung các bước synthetic.",
+      "steps": [
+        {
+          "number": 1,
+          "task": "Chọn các mẩu thông tin liên quan đến câu hỏi trong một nhóm context ngắn.",
+          "hint_level_1": "Đọc câu hỏi trước, rồi đánh dấu mẩu nào có thể giúp trả lời trực tiếp.",
+          "hint_level_2": "Với từng mẩu, tự hỏi: nếu bỏ mẩu này đi thì có mất căn cứ để trả lời câu hỏi không?",
+          "common_errors": ["Đưa mọi mẩu vào context dù không liên quan.", "Chọn mẩu chỉ vì có từ giống câu hỏi."],
+          "solution": "Giữ lại các mẩu có căn cứ liên quan trực tiếp đến câu hỏi và bỏ phần không hỗ trợ câu trả lời.",
+          "leak_signals": ["giữ lại các mẩu có căn cứ liên quan trực tiếp đến câu hỏi", "bỏ phần không hỗ trợ câu trả lời"]
+        },
+        {
+          "number": 2,
+          "task": "Sắp xếp các mẩu đã chọn để mô hình phân biệt chỉ dẫn, dữ kiện và câu hỏi.",
+          "hint_level_1": "Gắn nhãn riêng cho chỉ dẫn, dữ kiện và câu hỏi trước khi quyết định thứ tự.",
+          "hint_level_2": "Đặt mỗi loại trong một vùng có nhãn rõ và kiểm tra xem ranh giới giữa dữ kiện với yêu cầu có dễ nhận ra không.",
+          "common_errors": ["Trộn yêu cầu của người dùng vào phần dữ kiện trích dẫn.", "Không đánh dấu ranh giới các phần."],
+          "solution": "Đánh dấu riêng chỉ dẫn, dữ kiện và câu hỏi bằng nhãn/ranh giới tách biệt để mô hình biết chức năng của từng phần.",
+          "leak_signals": ["đánh dấu riêng chỉ dẫn, dữ kiện và câu hỏi bằng nhãn", "ranh giới tách biệt để mô hình biết chức năng"]
+        },
+        {
+          "number": 3,
+          "task": "Kiểm tra câu trả lời dựa trên context đã xếp và xác định phần nào có căn cứ.",
+          "hint_level_1": "Đối chiếu từng khẳng định trong đầu ra với đúng mẩu context đã chọn.",
+          "hint_level_2": "Đánh dấu khẳng định không có mẩu hỗ trợ và cân nhắc yêu cầu mô hình nêu rõ khi thiếu căn cứ.",
+          "common_errors": ["Coi câu trả lời trôi chảy là câu trả lời có nguồn.", "Không kiểm tra từng khẳng định riêng."],
+          "solution": "So khớp từng khẳng định với các mẩu context và đánh dấu nội dung không có căn cứ trong nguồn.",
+          "leak_signals": ["so khớp từng khẳng định với các mẩu context", "đánh dấu nội dung không có căn cứ trong nguồn"]
+        }
+      ]
     },
     {
-      "step": 3,
-      "code": "SYN-PROMPT-03",
-      "title": "Nhận diện chỉ dẫn mâu thuẫn",
-      "task": "Đọc một prompt có hai chỉ dẫn không thể đồng thời thỏa mãn và nêu điểm cần làm rõ.",
-      "hint": "Đánh dấu động từ yêu cầu ở mỗi câu, rồi so sánh xem chúng có đòi kết quả trái nhau không.",
-      "source": "synthetic-prompt-lab-v1"
-    },
-    {
-      "step": 4,
-      "code": "SYN-PROMPT-04",
-      "title": "Làm rõ định dạng đầu ra",
-      "task": "Sửa yêu cầu đầu ra để người đọc biết cần nhận đoạn văn, danh sách hay cấu trúc dữ liệu.",
-      "hint": "Chọn một định dạng duy nhất và mô tả các trường hoặc số ý cần có trước khi thử lại.",
-      "source": "synthetic-prompt-lab-v1"
-    },
-    {
-      "step": 5,
-      "code": "SYN-PROMPT-05",
-      "title": "Kiểm tra câu trả lời thiếu căn cứ",
-      "task": "Đánh giá câu trả lời có khẳng định chi tiết không xuất hiện trong tài liệu được cung cấp.",
-      "hint": "Đối chiếu từng khẳng định với đoạn nguồn; đánh dấu phần không tìm thấy căn cứ và yêu cầu mô hình nêu rõ giới hạn.",
-      "source": "synthetic-prompt-lab-v1"
-    },
-    {
-      "step": 6,
-      "code": "SYN-PROMPT-06",
-      "title": "Phân tách văn bản không đáng tin",
-      "task": "Thiết kế prompt để mô hình phân tích một đoạn văn được trích dẫn mà không coi nội dung đoạn đó là chỉ dẫn hệ thống.",
-      "hint": "Đặt ranh giới rõ quanh văn bản đầu vào và nói riêng mô hình cần làm gì với nội dung nằm bên trong ranh giới.",
-      "source": "synthetic-prompt-lab-v1"
-    },
-    {
-      "step": 7,
-      "code": "SYN-PROMPT-07",
-      "title": "Thử trường hợp ngoài phạm vi",
-      "task": "Quyết định cách phản hồi khi người dùng hỏi nội dung không có trong tài liệu lab.",
-      "hint": "Kiểm tra xem nguồn có trả lời được câu hỏi không; nếu không, nêu rõ thiếu căn cứ và hỏi người dùng muốn bổ sung tài liệu nào.",
-      "source": "synthetic-prompt-lab-v1"
-    },
-    {
-      "step": 8,
-      "code": "SYN-PROMPT-08",
-      "title": "Kiểm thử prompt bằng ví dụ đối nghịch",
-      "task": "Tạo một trường hợp thử để xem prompt có giữ đúng phạm vi khi đầu vào chứa chỉ dẫn gây nhiễu hay không.",
-      "hint": "Giữ nguyên mục tiêu hợp lệ, thay một phần đầu vào bằng chỉ dẫn không liên quan, rồi so sánh hành vi trước và sau.",
-      "source": "synthetic-prompt-lab-v1"
+      "lab_key": "d04-lab-thu-system-prompt",
+      "title": "Thử system prompt (bản minh họa)",
+      "aliases": ["thu system prompt", "system prompt"],
+      "source_basis": "Tên lab có trong evidence/data-mining.md; nội dung các bước synthetic.",
+      "steps": [
+        {
+          "number": 1,
+          "task": "Viết system prompt nêu vai trò và mục tiêu của trợ lý trong một bài tập nhỏ.",
+          "hint_level_1": "Viết riêng một câu mô tả trợ lý cần hỗ trợ ai và việc gì.",
+          "hint_level_2": "Thêm một giới hạn về việc trợ lý không nên làm, rồi thử xem câu trả lời có còn đúng mục tiêu không.",
+          "common_errors": ["Chỉ ghi một vai trò chung chung mà không nêu mục tiêu.", "Đặt dữ kiện thay đổi theo từng câu hỏi vào quy tắc ổn định."],
+          "solution": "Nêu rõ vai trò, người được hỗ trợ, mục tiêu và một giới hạn hành vi trong system prompt.",
+          "leak_signals": ["vai trò, người được hỗ trợ, mục tiêu và một giới hạn hành vi", "nêu rõ vai trò và mục tiêu trong system prompt"]
+        },
+        {
+          "number": 2,
+          "task": "Thử system prompt với một yêu cầu bình thường và một yêu cầu nằm ngoài phạm vi.",
+          "hint_level_1": "Chuẩn bị hai yêu cầu khác nhau nhưng giữ nguyên system prompt giữa hai lượt thử.",
+          "hint_level_2": "Ghi lại trợ lý làm gì ở mỗi lượt và so sánh với mục tiêu cùng giới hạn đã đặt.",
+          "common_errors": ["Sửa system prompt giữa hai lượt nên không so sánh được.", "Chỉ thử yêu cầu bình thường, không thử ranh giới."],
+          "solution": "Giữ system prompt cố định, thử một yêu cầu trong phạm vi và một yêu cầu ngoài phạm vi, rồi đối chiếu hai đầu ra với giới hạn.",
+          "leak_signals": ["giữ system prompt cố định", "thử một yêu cầu trong phạm vi và một yêu cầu ngoài phạm vi"]
+        },
+        {
+          "number": 3,
+          "task": "Cải thiện system prompt sau khi thấy một đầu ra không tuân theo giới hạn đã đặt.",
+          "hint_level_1": "Tìm câu giới hạn liên quan trực tiếp đến hành vi sai trước khi viết lại prompt.",
+          "hint_level_2": "Làm câu giới hạn cụ thể hơn, sau đó chạy lại đúng yêu cầu cũ để kiểm tra thay đổi.",
+          "common_errors": ["Thêm nhiều quy tắc không liên quan cùng lúc.", "Không chạy lại cùng một yêu cầu sau khi sửa."],
+          "solution": "Làm rõ giới hạn liên quan đến lỗi quan sát được và chạy lại cùng input để so sánh đầu ra trước/sau.",
+          "leak_signals": ["làm rõ giới hạn liên quan đến lỗi quan sát được", "chạy lại cùng input để so sánh đầu ra trước/sau"]
+        }
+      ]
     }
   ]
 }
