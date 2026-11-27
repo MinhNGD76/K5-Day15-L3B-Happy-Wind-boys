@@ -19,6 +19,7 @@ Nối model thật: điền .env (chép từ .env.example), rồi viết nhánh 
 """
 import json
 import os
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -26,6 +27,10 @@ import urllib.request
 from tracing import model_call
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
+MAX_RETRIES = 3  # retries after the initial request; at most four HTTP attempts
+MAX_RETRY_AFTER = 30.0
 
 
 def load_env(path=os.path.join(ROOT, ".env")):
@@ -55,16 +60,28 @@ def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
         headers={"Content-Type": "application/json", **headers},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            payload = response.read().decode("utf-8")
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")[:500]
-        if API_KEY:
-            detail = detail.replace(API_KEY, "[REDACTED]")
-        raise RuntimeError("Gemini API HTTP %s: %s" % (exc.code, detail)) from None
-    except urllib.error.URLError as exc:
-        raise RuntimeError("Không kết nối được Gemini API: %s" % exc.reason) from None
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                payload = response.read().decode("utf-8")
+            break
+        except urllib.error.HTTPError as exc:
+            raw_detail = exc.read().decode("utf-8", "replace")[:500]
+            if attempt < MAX_RETRIES and exc.code in RETRYABLE_HTTP_STATUS:
+                retry_after = exc.headers.get("Retry-After") if exc.headers else None
+                try:
+                    delay = min(max(float(retry_after), 0.0), MAX_RETRY_AFTER) if retry_after else 2 ** attempt
+                except (TypeError, ValueError):
+                    delay = 2 ** attempt
+                time.sleep(delay)
+                continue
+            detail = raw_detail.replace(API_KEY, "[REDACTED]") if API_KEY else raw_detail
+            raise RuntimeError("Gemini API HTTP %s: %s" % (exc.code, detail)) from None
+        except urllib.error.URLError as exc:
+            if attempt < MAX_RETRIES:
+                time.sleep(2 ** attempt)
+                continue
+            raise RuntimeError("Không kết nối được Gemini API: %s" % exc.reason) from None
     try:
         return json.loads(payload)
     except json.JSONDecodeError:
