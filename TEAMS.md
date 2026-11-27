@@ -11,10 +11,10 @@
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
-| 1 | ____ | ____ | Đội trưởng | Mạch câu chuyện, canvas, spec §1–2 §4, evidence/summary, slide, nộp checkpoint |
-| 2 | ____ | ____ | Thành viên | Bản chạy thử: codebase/, nối model, chặn rủi ro |
-| 3 | ____ | ____ | Thành viên | Đánh giá: eval/benchmark.csv, metric_spec.yaml, spec §5 §7, eval/report.md |
-| 4 | ____ | ____ | Thành viên | Đào data + chi phí: evidence/data-mining.md, data/DATA_CARD.md, cost/ |
+| 1 | Nguyễn Đình Minh | 2A202603898 | Đội trưởng | Mạch câu chuyện, canvas, spec §1–2 §4, evidence/summary, slide, nộp checkpoint |
+| 2 | Phạm Lê Chuẩn | 2A202603784 | Thành viên | Bản chạy thử: codebase/, nối model, chặn rủi ro |
+| 3 | Nguyễn Tài Minh Huy | 2A202603828 | Thành viên | Đánh giá: eval/benchmark.csv, metric_spec.yaml, spec §5 §7, eval/report.md |
+| 4 | Nguyễn Văn Hùng | 2A202603816 | Thành viên | Đào data + chi phí: evidence/data-mining.md, data/DATA_CARD.md, cost/ |
 
 **Quy tắc điền**
 - **Lớp:** `L3A` hoặc `L3B`. **Track:** một chữ `A` (EdTech), `B` (Y tế), `C` (Du lịch), `D` (Thương mại điện tử), `E` (Tài chính) hoặc `F` (Làn khác). **Link repo:** link GitHub công khai của nhóm.
