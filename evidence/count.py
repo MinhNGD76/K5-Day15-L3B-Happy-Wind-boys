@@ -68,7 +68,7 @@ per_lab = defaultdict(lambda: [0, 0])
 for k in opened:
     per_lab[k[1]][0] += 1
     per_lab[k[1]][1] += k not in real_done
-print("Lab mở nhiều nhất (mở · không xong):")
+print("Lab mở nhiều nhất (không xong / số cặp đã mở):")
 for lab, (o, s) in sorted(per_lab.items(), key=lambda kv: -kv[1][0])[:6]:
     print(f"  {lab}: {pct(s, o)}")
 
@@ -77,7 +77,7 @@ vq = [data(r) for r in events if r["type"] == "agent_replied"
       and chat.get(r["ref_id"], {}).get("channel") == "video_question"]
 logged = [x for x in vq if "moc_trich_dan" in x]  # trường này chỉ có từ 13/11
 print("\n== 2. Trợ giảng dưới video ==")
-print("Học viên có hỏi AI:", pct(len({c["hv"] for c in chat.values()}), len(active)))
+print("Học viên có bản ghi chat (mọi kênh):", pct(len({c["hv"] for c in chat.values()}), len(active)))
 print("Trả lời thiếu ngữ cảnh (missing_context):", pct(sum(x.get("missing_context") is True for x in vq), len(vq)))
 print("Trả lời không trích mốc giây (chỉ dòng có ghi trường, từ 13/11):",
       pct(sum(not x["moc_trich_dan"] for x in logged), len(logged)))
