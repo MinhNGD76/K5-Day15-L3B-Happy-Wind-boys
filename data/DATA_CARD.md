@@ -14,27 +14,27 @@ Hai nguồn dữ liệu phục vụ hai mục đích khác nhau:
 | Tệp | `data/labs.json` |
 | Nguồn | Nội dung minh họa do nhóm xây dựng với sự hỗ trợ của công cụ AI; **không phải dữ liệu BTC, không phải đề lab chính thức**. |
 | Nhãn nguồn | `synthetic` |
-| Quy mô | 8 bước trong các mini lab minh họa về prompt và LLM. |
-| Cấu trúc | Mã/tên lab, nội dung bước, gợi ý và dữ liệu hỗ trợ luồng tra cứu theo bước (theo các trường được khai báo trong JSON). |
+| Quy mô | 8 bước synthetic trong ba lab minh họa: `d01-lab-ban-la-llm`, `d01-lab-xep-ban-context`, `d04-lab-thu-system-prompt`. |
+| Cấu trúc | Đề, hai cấp gợi ý, lỗi hay gặp, lời giải synthetic và dấu hiệu leak. Công cụ chỉ gửi đề/gợi ý/lỗi vào model; lời giải và dấu hiệu leak được code giữ lại để kiểm đầu ra. |
 | Xử lý | Biên soạn nội dung ngắn theo phạm vi bài toán A6; không sử dụng thông tin định danh học viên. |
-| Phiên bản | `synthetic-prompt-lab-v1`, ngày 27/11/2026. |
+| Phiên bản | `synthetic-prompt-labs-v2`, ngày 27/11/2026. |
 | Ứng dụng | Dữ liệu đầu vào cho công cụ truy xuất bước lab của bản chạy thử. |
 | Hạn chế | Không chứng minh được độ khó, đáp án hay hiệu quả hỗ trợ đối với mini lab chính thức. |
 
-**Kiểm duyệt nội dung:** Phạm Lê Chuẩn là người được phân công xác nhận nội dung lab theo thiết kế tại `spec.md` §4. Trạng thái xác nhận thủ công: **chưa có bằng chứng ký xác nhận**. Người phụ trách tài liệu dữ liệu: Nguyễn Văn Hùng.
+**Kiểm duyệt nội dung:** Phạm Lê Chuẩn là người được phân công xác nhận nội dung lab theo thiết kế tại `spec.md` §4. Coding agent đã rà cấu trúc và dấu hiệu leak; trạng thái xác nhận thủ công của Chuẩn: **chưa có bằng chứng ký xác nhận**. Người phụ trách tài liệu dữ liệu: Nguyễn Văn Hùng.
 
 ## 3. Dataset 2 — Dữ liệu hành vi pre-class (BTC cung cấp)
 
 | Thuộc tính | Mô tả |
 |---|---|
 | Nguồn | Dữ liệu pre-class do Ban tổ chức cung cấp. |
-| Vị trí xử lý nội bộ | `data-btc/preclass/` (không đưa vào Git). |
+| Vị trí xử lý nội bộ | `data_track_a/preclass/` trong workspace; dữ liệu nguồn không được đưa vào Git. |
 | Tệp | `events.csv`, `chat.csv`, `answers.csv`. |
 | Loại dữ liệu | Nhật ký hành vi và tương tác trong môi trường học tập; các bản ghi dùng mã học viên, không sử dụng tên thật trong báo cáo. |
 | Thời gian phân tích | 05–25/11/2026 (21 ngày), theo phạm vi ghi trong `evidence/data-mining.md`. |
 | Đơn vị thống kê chính | Cặp `(hv, lab_key)` có ít nhất một sự kiện `lab_opened`; mở lại cùng lab không tính thành lượt mới. |
 | Quy tắc phân loại | Hoàn thành thật nếu có `lab_completed` không bỏ qua; chỉ bỏ qua nếu mọi sự kiện hoàn thành đều có `skipped=true`; bỏ dở nếu không ghi nhận sự kiện hoàn thành. |
-| Công cụ tái lập | `python evidence/count.py`, sử dụng `events.csv` và `chat.csv` cho các chỉ số in ra. |
+| Công cụ tái lập | `python evidence/count.py data_track_a/preclass`, sử dụng `events.csv` và `chat.csv` cho các chỉ số in ra. |
 | Mục đích sử dụng | Định lượng tình trạng không hoàn thành mini lab và mô tả hành vi; hỗ trợ xây dựng giả định về nhu cầu, **không đo trực tiếp số lần học viên sẽ hỏi AI**. |
 | Quyền riêng tư | Không commit CSV gốc, không đưa câu chat cá nhân vào repository, chỉ công bố số tổng hợp và ví dụ đã mã hóa. |
 
