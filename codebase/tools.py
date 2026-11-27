@@ -1,18 +1,59 @@
-"""Công cụ của bài toán — NHÓM VIẾT. Điền ở guide bước 2.2 (thiết kế) và 3.2 (code).
+"""Read-only lookup of the prototype lab's practice prompts and hints."""
+import json
+import os
+import re
 
-Mỗi công cụ là một hàm Python có @tool. Docstring ghi đúng 4 ý như sơ đồ ở spec.md §4:
-    tên · input · output · có tác động ra ngoài không (gửi tin, sửa dữ liệu, chấm điểm…)
-Khung tự ghi mỗi lần gọi công cụ vào trace (tên, input, output rút gọn, thời gian, lỗi).
+from tracing import tool
 
-Số công cụ, kiểu công cụ do thiết kế của nhóm quyết định — có bài chỉ cần một công cụ tra cứu.
-Công cụ có tác động ra ngoài: KHÔNG tự làm. Trả về bản nháp chờ người duyệt (guide bước 2.2, "chỗ người duyệt").
-Dữ liệu công cụ đọc (bài mẫu, thông báo mẫu, lịch…): để trong data/ và mô tả ở data/DATA_CARD.md.
-"""
-from tracing import tool, TOOLS  # noqa: F401  (TOOLS: danh sách công cụ đã đăng ký, dùng khi viết vòng lặp agent)
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LABS_PATH = os.path.join(ROOT, "data", "labs.json")
+
+
+def _tokens(text):
+    return set(re.findall(r"[\w-]+", str(text).lower(), flags=re.UNICODE))
 
 
 @tool
-def search_example(query: str) -> list:
-    """(ví dụ — thay bằng công cụ của nhóm) Tra dữ liệu mẫu theo câu hỏi.
-    Input: câu hỏi (str). Output: danh sách đoạn {"code", "text"}. Không tác động ra ngoài."""
-    return [{"code": "VD-1", "text": "(ví dụ) đoạn dữ liệu giả — thay bằng dữ liệu thật của bài toán"}]
+def search_lab_step(query: str) -> list:
+    """Tra gợi ý cho bước mini lab từ dữ liệu mẫu.
+
+    Input: mô tả chỗ kẹt hoặc mã bước (str).
+    Output: tối đa 3 đoạn gồm mã, yêu cầu, gợi ý và nguồn; không trả đáp án.
+    Tác động ngoài: không; chỉ đọc data/labs.json.
+    """
+    if not isinstance(query, str) or not query.strip():
+        return []
+
+    try:
+        with open(LABS_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError) as exc:
+        raise RuntimeError("Không đọc được dữ liệu lab mẫu: %s" % exc)
+
+    query_tokens = _tokens(query)
+    # Explicit step numbers take priority (e.g. "bước 3").
+    step_numbers = set(re.findall(r"(?:bước|step)\s*(\d+)", query.lower()))
+    if not step_numbers:
+        # Still identify an explicitly numbered step if a console mangles accents.
+        step_numbers = set(re.findall(r"\d+", query))
+    ranked = []
+    for item in data.get("steps", []):
+        searchable = " ".join((item.get("code", ""), item.get("title", ""), item.get("task", "")))
+        words = _tokens(searchable)
+        score = len(query_tokens & words)
+        if step_numbers and str(item.get("step")) in step_numbers:
+            score += 10
+        if score:
+            ranked.append((score, item))
+
+    ranked.sort(key=lambda pair: (-pair[0], pair[1].get("step", 0)))
+    return [
+        {
+            "code": item["code"],
+            "title": item["title"],
+            "task": item["task"],
+            "hint": item["hint"],
+            "source": item.get("source", ""),
+        }
+        for _, item in ranked[:3]
+    ]

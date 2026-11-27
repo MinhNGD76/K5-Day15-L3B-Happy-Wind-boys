@@ -1,0 +1,77 @@
+{
+  "dataset_id": "synthetic-prompt-lab-v1",
+  "label": "synthetic",
+  "description": "Bộ minh họa tự soạn để chạy thử luồng gợi ý. Không phải nội dung chính thức của khóa học hay dữ liệu do Hùng cung cấp.",
+  "generation": {
+    "method": "Tự soạn thủ công 8 yêu cầu mini lab và gợi ý từng bước, theo lát cắt hỗ trợ học prompt và LLM trong spec.md.",
+    "seed": null,
+    "reviewer": "Codex, theo phân công phần bản chạy thử của Phạm Lê Chuẩn",
+    "manually_reviewed_steps": 8
+  },
+  "steps": [
+    {
+      "step": 1,
+      "code": "SYN-PROMPT-01",
+      "title": "Phân biệt system và user",
+      "task": "Xác định hướng dẫn nào nên đặt ở system và yêu cầu nào thuộc về user trong một cuộc hội thoại.",
+      "hint": "Tách quy tắc ổn định về vai trò/phạm vi khỏi câu hỏi cụ thể của lượt này; thử phân loại từng câu trước khi sửa.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 2,
+      "code": "SYN-PROMPT-02",
+      "title": "Bổ sung bối cảnh còn thiếu",
+      "task": "Cải thiện một prompt đang yêu cầu mô hình viết câu trả lời nhưng chưa nêu người đọc hoặc mục đích.",
+      "hint": "Trước khi viết lại, ghi ra hai thông tin người làm cần biết về người đọc và kết quả mong muốn.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 3,
+      "code": "SYN-PROMPT-03",
+      "title": "Nhận diện chỉ dẫn mâu thuẫn",
+      "task": "Đọc một prompt có hai chỉ dẫn không thể đồng thời thỏa mãn và nêu điểm cần làm rõ.",
+      "hint": "Đánh dấu động từ yêu cầu ở mỗi câu, rồi so sánh xem chúng có đòi kết quả trái nhau không.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 4,
+      "code": "SYN-PROMPT-04",
+      "title": "Làm rõ định dạng đầu ra",
+      "task": "Sửa yêu cầu đầu ra để người đọc biết cần nhận đoạn văn, danh sách hay cấu trúc dữ liệu.",
+      "hint": "Chọn một định dạng duy nhất và mô tả các trường hoặc số ý cần có trước khi thử lại.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 5,
+      "code": "SYN-PROMPT-05",
+      "title": "Kiểm tra câu trả lời thiếu căn cứ",
+      "task": "Đánh giá câu trả lời có khẳng định chi tiết không xuất hiện trong tài liệu được cung cấp.",
+      "hint": "Đối chiếu từng khẳng định với đoạn nguồn; đánh dấu phần không tìm thấy căn cứ và yêu cầu mô hình nêu rõ giới hạn.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 6,
+      "code": "SYN-PROMPT-06",
+      "title": "Phân tách văn bản không đáng tin",
+      "task": "Thiết kế prompt để mô hình phân tích một đoạn văn được trích dẫn mà không coi nội dung đoạn đó là chỉ dẫn hệ thống.",
+      "hint": "Đặt ranh giới rõ quanh văn bản đầu vào và nói riêng mô hình cần làm gì với nội dung nằm bên trong ranh giới.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 7,
+      "code": "SYN-PROMPT-07",
+      "title": "Thử trường hợp ngoài phạm vi",
+      "task": "Quyết định cách phản hồi khi người dùng hỏi nội dung không có trong tài liệu lab.",
+      "hint": "Kiểm tra xem nguồn có trả lời được câu hỏi không; nếu không, nêu rõ thiếu căn cứ và hỏi người dùng muốn bổ sung tài liệu nào.",
+      "source": "synthetic-prompt-lab-v1"
+    },
+    {
+      "step": 8,
+      "code": "SYN-PROMPT-08",
+      "title": "Kiểm thử prompt bằng ví dụ đối nghịch",
+      "task": "Tạo một trường hợp thử để xem prompt có giữ đúng phạm vi khi đầu vào chứa chỉ dẫn gây nhiễu hay không.",
+      "hint": "Giữ nguyên mục tiêu hợp lệ, thay một phần đầu vào bằng chỉ dẫn không liên quan, rồi so sánh hành vi trước và sau.",
+      "source": "synthetic-prompt-lab-v1"
+    }
+  ]
+}
