@@ -21,14 +21,19 @@ Nếu quy đổi **số lab không hoàn thành** từ 21 ngày sang 30 ngày, t
 
 | Thành phần | Cách xác định | Trạng thái |
 |---|---|---|
-| 3 persona: dùng ít, vừa, nhiều | Tỷ trọng, số phiên/người/tháng, số lượt hỏi/phiên trong `cost/personas.yaml` | Các số đang có là **giả định ban đầu**, chưa được xác nhận bằng phỏng vấn hoặc phân bố theo học viên |
-| Quy mô thấp / cơ sở / cao | `users.low`, `users.base`, `users.high` | Cần đối chiếu quy mô lớp và giả định tỷ lệ sử dụng; không đồng nhất tổng tài khoản với người chắc chắn dùng AI |
-| Hai mức giá model | Giá vào và ra, USD/1 triệu token | Cần xác nhận model sẽ dùng và nguồn giá của đúng nhà cung cấp API tại thời điểm chạy |
-| Model dùng để đo token | Trường `model` do API trả về | **Chưa có bản đo token thật được xác nhận** |
+| 3 persona: dùng ít, vừa, nhiều | Tỷ trọng 50%/30%/20%; 1/2/4 phiên/người/tháng; 1/2/3 lượt hỏi/phiên | **Giả định để mô phỏng**, chưa có số đo sử dụng AI thực tế |
+| Quy mô thấp / cơ sở / cao | 50 / 107 / 147 người trong `cost/personas.yaml` | 50: tự ước tính; 107 người từng không hoàn thành lab; 147 người từng mở lab. **Chưa chứng minh tất cả sẽ dùng AI** |
+| Hai mức giá model | Gemini 3.1 Flash-Lite và Gemini 2.5 Pro; USD/1 triệu token | Theo Google Gemini API Standard Paid Tier, https://ai.google.dev/gemini-api/docs/pricing (28/11/2026); Pro là phương án áp giá so sánh |
+| Model dùng để đo token | `gemini-3.1-flash-lite` | Có token thật trong lượt mô phỏng thử 10 phiên; chưa có số đo chính thức ≥50 phiên |
 | Tỷ lệ đạt | Lấy từ lượt đánh giá chính thức đã chấm | **Chưa có `eval/run-2.csv` đã chấm**; không lấy kết quả thống nhất 5 câu giữa hai người chấm thay thế |
-| Phỏng vấn học viên P4 | Một học viên ngoài nhóm, ghi nguyên văn tình huống đã xảy ra | **Chưa thực hiện phỏng vấn** |
+| Phỏng vấn học viên P4 | `evidence/interviews/P4.md` | Đã phỏng vấn: lỗi Docker và server khiến học viên không hoàn thành lab; mất khoảng 60 phút; tự báo gặp 1 lần/tháng |
 
 Các giả định dùng để mô phỏng phải được ghi rõ nguồn; nếu dựa vào phỏng vấn thì trỏ tới P1–P4, nếu chưa có bằng chứng thì ghi **tự ước tính**. Không thay số nhằm khớp một kết luận có sẵn.
+
+**Đối chiếu P4:** Học viên cho biết gặp khó khăn khoảng 1 lần/tháng và mất khoảng 60 phút xử lý sự cố Docker/server. Đây là một trường hợp định tính; không thể suy trực tiếp số lần hỏi AI hoặc thời gian AI tiết kiệm được.
+
+**Mô phỏng thử:** Theo kết quả chạy ngày 27/11/2026, `python run.py simulate --try --wait 4` hoàn tất 10/10 phiên, 0 lỗi trên `gemini-3.1-flash-lite`; S008 và S010 không phát sinh token. Kết quả này dùng để xác nhận khả năng chạy, **không thay thế mô phỏng ≥50 phiên**. Các số chi phí tháng phải tính lại sau khi cập nhật persona; chưa có tỷ lệ đạt từ lượt eval đã chấm.
+
 
 ## 3. Phương pháp tính
 
@@ -42,7 +47,7 @@ Hai model trong bảng giá có thể là kịch bản thay thế. Nếu **đo t
 
 ## 4. Bảng kết quả cần điền sau khi có số đo
 
-Thông tin chạy: `cost/simulate-N.csv` — **chưa có số đo hợp lệ để kết luận**.
+Thông tin chạy chính thức: `cost/simulate-N.csv` — **chưa có lượt ≥50 phiên và tỷ lệ đạt từ eval đã chấm để kết luận**.
 
 | Model áp giá | Chi phí/phiên (USD) | Chi phí/task đạt (USD) | Thấp (USD/tháng) | Cơ sở (USD/tháng) | Cao (USD/tháng) | Chi phí/người/tháng (USD) |
 |---|---:|---:|---:|---:|---:|---:|
@@ -59,8 +64,8 @@ Kết luận về tính đáng triển khai chỉ được đưa ra sau khi có 
 
 ## 6. Minh chứng cần hoàn thiện trước CP4
 
-- `python run.py simulate --try`: xác nhận model thật, token được đo, 0 phiên lỗi hoặc nêu rõ lỗi.
+- `python run.py simulate --try`: đã chạy 10/10 phiên không lỗi với Gemini 3.1 Flash-Lite; cần lưu CSV và trace làm minh chứng, chạy lại nếu thay cấu hình persona.
 - `eval/run-2.csv`: nhận từ Huy sau khi đã chấm, kèm thống kê theo metric và model thực sử dụng.
 - `python run.py simulate --rate-from eval/run-2.csv`: mô phỏng ít nhất 50 phiên, lưu CSV và báo cáo tự sinh.
-- `cost/personas.yaml`: xác minh model, bảng giá và nguồn giả định; bổ sung kết quả phỏng vấn P4 khi có.
+- `cost/personas.yaml`: đã có 3 persona, nguồn giả định, 3 kịch bản quy mô và giá 2 model; cần chốt cấu hình trước mô phỏng chính thức.
 - Cập nhật `spec.md` §8 từ bảng kết quả thực tế, có ghi nguồn và hạn chế.
