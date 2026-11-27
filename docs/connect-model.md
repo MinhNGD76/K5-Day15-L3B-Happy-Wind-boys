@@ -124,19 +124,19 @@ def call_ollama(system, user):
 - Không cần key.
 - **Rất chậm trên laptop:** ví dụ `gemma4:12b` mất 43–165 giây mỗi câu trên máy Mac. Chỉ hợp để thử luồng, không đủ nhanh để chạy hết bộ câu thử và 50 phiên mô phỏng.
 
-### 2.4 Nhà cung cấp khác (Gemini…)
+### 2.4 Gemini
 
-1. Mở trang quickstart chính thức của hãng, chép ví dụ Python **ngắn nhất** gọi được 1 câu, dán vào hàm dưới.
-2. Bật `SHOW_RAW = True`, hỏi thử 1 câu, rồi xem câu trả lời và số token nằm ở trường nào trong phản hồi.
-3. Dùng thư viện (SDK) của hãng thì ghi tên gói vào `requirements.txt`.
+`codebase/ai.py` gọi Gemini REST `generateContent` bằng thư viện chuẩn của Python; không cần cài SDK. Cấu hình `.env`:
 
-```python
-def call_provider(system, user):
-    """Gọi đúng MỘT lần model. Trả về {"text": str, "tokens_in": int, "tokens_out": int}."""
-    # 1. gọi model bằng API_KEY và MODEL_NAME (chép từ quickstart)
-    # 2. lấy chữ trả lời + số token vào / ra từ phản hồi
-    raise RuntimeError("Chưa điền: chép ví dụ quickstart vào call_provider()")
 ```
+MODEL_PROVIDER=gemini
+MODEL_NAME=gemini-3.1-flash-lite
+API_KEY=<Gemini API key của nhóm>
+```
+
+API key gửi trong header `x-goog-api-key`, không nằm trong URL hoặc prompt. Input/output token đọc từ `usageMetadata.promptTokenCount`, `candidatesTokenCount` và `thoughtsTokenCount` trong phản hồi API. Nếu thiếu trường token bắt buộc, chương trình báo lỗi thay vì ước lượng. Xem [Gemini REST API reference](https://ai.google.dev/api/generate-content) và [model list](https://ai.google.dev/gemini-api/docs/models) để chọn model đang khả dụng.
+
+Không commit `.env`. Chỉ chạy `python run.py eval --try` sau khi có key hợp lệ và đã lưu cấu hình.
 
 ## 3. Thử
 
