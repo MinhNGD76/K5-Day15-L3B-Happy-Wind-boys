@@ -120,10 +120,12 @@ flowchart LR
   | G1 / G2 — nói rõ làm được gì, tốt đến đâu | Dòng cuối mọi output: "Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab coach." |
   | G8 / G9 — dễ bỏ qua, dễ sửa | Mỗi lượt chỉ một gợi ý ngắn, học viên bỏ qua được. Hỏi lại thì gõ thêm chi tiết |
 
-- **Phần còn giả / chưa build** (cập nhật khi Chuẩn build xong):
-  - `codebase/` vẫn là khung ví dụ của BTC; Chuẩn build theo thiết kế này trước CP3.
-  - `data/labs.json` chưa có; khi có sẽ là **synthetic** (tự viết theo tên lab thật, không phải đề thật của khoá).
-  - Model: chế độ giả (`MODEL_PROVIDER=fake`) cho đến khi nối model thật.
+- **Phần đã build và còn giả (CP3):**
+  - `codebase/tools.py` có `find_lab`, `get_lab_step`, `check_leak`; `get_lab_step` không đưa `solution` hoặc `leak_signals` vào prompt.
+  - `codebase/agent.py` chỉ nhận JSON đúng schema, chặn yêu cầu xin lời giải/làm hộ/injection, kiểm `check_leak`, và thay đầu ra bị phát hiện bằng gợi ý cấp 1.
+  - `data/labs.json` là **synthetic**: 8 bước minh họa theo tên ba lab trong dữ liệu hành vi; không phải đề, gợi ý hay đáp án chính thức. Dữ liệu `data_track_a/` chỉ dùng làm căn cứ hành vi, không làm nguồn tri thức cho câu trả lời.
+  - `codebase/ai.py` hỗ trợ Gemini thật qua `generateContent`; `python run.py eval --try` đã xác nhận 3/3 câu thành công với `gemini-3.1-flash-lite` và token vào/ra > 0. Chế độ `fake` vẫn giữ để chạy ngoại tuyến.
+  - Leak check chỉ phát hiện lời giải và cụm dấu hiệu đã khai báo trong bộ synthetic; không chứng minh chặn được mọi cách diễn đạt tương đương. Nội dung lab và dấu hiệu leak cần người trong nhóm duyệt trước demo.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -176,7 +178,7 @@ flowchart LR
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 27/11/2026 · CP3 | Nối Gemini; triển khai `find_lab`, `get_lab_step`, `check_leak`, kiểm JSON và test guard; dùng bộ 8 bước synthetic theo ba lab có tên trong data hành vi. | Hoàn thiện workflow §4 và chặn lộ lời giải/prompt injection; `eval --try` chạy 3/3 với token >0. Lượt `run-1` sau đó cho thấy cần xem lại B08 và B10; chưa sửa output đã chạy. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
