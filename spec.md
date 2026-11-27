@@ -152,7 +152,7 @@ flowchart LR
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 
-- Data card: `data/DATA_CARD.md` · `eval/benchmark.csv`: 12 câu (thuong 4 · kho 6 · tu_choi 2) · `eval/metric_spec.yaml`: 4 metric.
+- Data card: `data/DATA_CARD.md` · `eval/benchmark.csv`: 24 câu (thuong 12 · kho 10 · tu_choi 2) · `eval/metric_spec.yaml`: 4 metric.
 - **Chuẩn đạt CP2:** Đạt khi ≥ 80% câu qua và gợi ý đúng bước ≥90%, không lộ lời giải 100%, xử lý thiếu hoặc sai thông tin 100%, từ chối đúng 100%. Một câu qua khi đáp ứng pass_criterion và mọi metric áp dụng, không lỗi kỹ thuật, output không rỗng.
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → `eval/report.md`, `eval/README.md`.
 
@@ -176,7 +176,7 @@ flowchart LR
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 28/11/2026 01:05 | Mở rộng benchmark từ 12 lên 24 câu; cập nhật B13–B20 tương thích dataset V2; giữ nguyên B01–B12 và 4 metrics CP2. | data/labs.json, evidence/data-mining.md, Interview P4; validation PASS. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
