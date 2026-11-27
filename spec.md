@@ -1,4 +1,4 @@
-# AI SPEC — Gợi ý bước tiếp theo cho mini lab pre-class · Nhóm HappyWindBoys · Phòng C401 · Zone __
+# AI SPEC — Gợi ý bước tiếp theo cho mini lab pre-class · Nhóm HappyWindBoys · Phòng C401 · Zone 2
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
 
@@ -6,12 +6,12 @@ Track: [x] A · [ ] B · [ ] C · [ ] D · [ ] E — bài toán: A6 · Hỗ tr�
 Data BTC cấp đã dùng (không commit nguyên file): `data/preclass/` (`events.csv`, `chat.csv`, `answers.csv`): chỉ số tổng hợp, xem `evidence/data-mining.md`
 
 ## §0. Hiện tại việc này diễn ra thế nào *(guide 1.1)*
-- Luồng hiện tại (theo data pre-class; ảnh chụp tài khoản: *chưa kiểm*, bổ sung trước CP3):
+- Luồng hiện tại (theo data pre-class; ảnh chụp tài khoản: *chưa kiểm*):
   1. Học viên mở bài trên pre-class.
   2. Mở mini lab (1–3 bước).
   3. Làm từng bước và nộp.
   4. Bấm "xong", hoặc "bỏ qua".
-- AI đang có: trợ giảng dưới video (`channel = video_question`). **Không có kênh hỏi AI nào gắn với lab**: `chat_sent` chỉ có `video_question`, `video_discussion_reply`, `session_question` *(nguồn: `data/preclass/events.csv`)*. Ngoài trang pre-class, học viên có thể hỏi trên Discord hoặc dùng ChatGPT riêng *(chưa kiểm, hỏi trong phỏng vấn)*.
+- AI đang có: trợ giảng dưới video (`channel = video_question`). **Không có kênh hỏi AI nào gắn với lab**: `chat_sent` chỉ có `video_question`, `video_discussion_reply`, `session_question` *(nguồn: `data/preclass/events.csv`)*. Ngoài trang pre-class, học viên tự tìm cách bên ngoài: P1 "lên mạng, sử dụng AI để hỗ trợ"; P4 chuyển sang GitHub Codespaces và Render khi không cài được Docker *(nguồn: `evidence/interviews/P1.md`, `P4.md`)*.
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
 - **Người dùng chính:** học viên L3 AI20K K5 đi làm ban ngày, tối tự làm mini lab pre-class trước buổi học, không có lab coach bên cạnh.
@@ -19,13 +19,19 @@ Data BTC cấp đã dùng (không commit nguyên file): `data/preclass/` (`event
 - **Hôm nay họ giải bằng gì, hỏng ở đâu:**
   - Tự mò, hỏi trợ giảng dưới video (không gắn với lab), hỏi Discord hoặc bạn, hoặc bỏ qua.
   - Hỏng ở chỗ: không ai trả lời đúng lúc, ngay tại bước đang kẹt.
-  - Vì sao chưa bỏ các cách này: *chưa kiểm*, hỏi trong phỏng vấn.
+  - Phỏng vấn cho thấy học viên đã tự tìm trên mạng hoặc dùng AI chung (P1), hoặc đổi môi trường (P4), nhưng vẫn mất 20–60 phút rồi bỏ.
+  - Vì sao chưa bỏ các cách này: *chưa kiểm* (P1 và P4 chưa được hỏi câu này).
 - **Pain (không có chữ AI):** học viên L3 tự làm mini lab trước buổi học bị kẹt ở một bước mà không có ai để hỏi ngay, nên bỏ dở hoặc bấm bỏ qua. Đến buổi lab trên lớp, họ thiếu phần thực hành nền.
 - **Bằng chứng, bản CP1 (chi tiết: `evidence/data-mining.md`):**
   - 194/538 (36,1%) lượt học viên × lab đã mở không làm xong thật.
   - 107/147 (72,8%) học viên từng mở lab có ≥1 lab không xong.
   - 59/98 lượt bỏ qua xảy ra ngay ở bước 0, nên chưa chắc là kẹt.
-  - Kết luận: chờ phỏng vấn ≥4 học viên để biết **vì sao**.
+  - Kết luận CP1: chờ phỏng vấn ≥4 học viên để biết **vì sao**.
+- **Bằng chứng, bản CP3 (chi tiết: `evidence/summary.md`):** 2/4 cuộc phỏng vấn đã xong (P1, P4), P2–P3 đang chờ.
+  - Cả 2 người đều kẹt thật ở một bước: P1 ở bước vẽ sơ đồ quy trình hiện tại của mini lab số 2, P4 ở bước cài Docker. Cả 2 đều mất 20–60 phút rồi bỏ.
+  - Lý do chính tự nhận **không phải** là kẹt: P1 nói "Hết thời gian", P4 bị lỗi môi trường và server.
+  - Cả 2 muốn gợi ý trước thay vì đáp án ngay: *"Gợi ý trước rồi đến đáp án…"* (P1), *"tôi muốn gợi ý, vì từ đó có thể tự tìm ra đáp án"* (P4).
+  - Kết luận tạm: giả thuyết **đúng một phần**. Kẹt là nguyên nhân gốc làm tốn thời gian, rồi hết giờ hoặc gặp lỗi môi trường thì bỏ. Lỗi môi trường nằm ngoài phạm vi lát cắt §4 và phải được chuyển cho lab coach. Chốt khi có P2–P3.
 
 ## §2. Impact & quyết định chọn *(guide 1.3, bản CP1, cập nhật đến CP3)*
 
@@ -33,32 +39,44 @@ Data phủ 21 ngày (05–25/11), quy đổi ra tháng bằng × 30/21.
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-| **Gợi ý bước tiếp theo khi kẹt mini lab** | 107/147 học viên từng mở lab *(data)* | ~277 lab không xong (194 × 30/21) *(data)* | ~20 phút làm bù hoặc hụt nền ở lab trên lớp *(tự ước tính, kiểm bằng phỏng vấn)* | ~92 giờ học viên | Kịp: đề lab tự viết lại ngắn, 1 quyết định AI | **Chọn** |
+| **Gợi ý bước tiếp theo khi kẹt mini lab** | 107/147 học viên từng mở lab *(data)* | ~277 lab không xong (194 × 30/21) *(data)* | ~40 phút loay hoay trước khi bỏ *(trung vị phỏng vấn P1 20 phút, P4 60 phút, n=2)* | ~185 giờ học viên | Kịp: đề lab tự viết lại ngắn, 1 quyết định AI | **Chọn** |
 | Trợ giảng dưới video trả lời có căn cứ | 145/436 học viên có hỏi AI *(data)* | ~143 câu trả lời thiếu ngữ cảnh (100 × 30/21) *(data)* | ~5 phút tự tìm lại trong video *(tự ước tính)* | ~12 giờ | Kịp | Loại |
 | Báo cáo "lớp đang kẹt gì" cho giảng viên trước buổi | Giảng viên L3 *(chưa có số)* | ~8 buổi *(tự ước tính)* | Chưa có số | Chưa tính được | Khó gặp giảng viên trong 2 ngày | Loại |
 
-- **Impact / tháng của hướng chọn** = 277 lab không xong × 20 phút ≈ **92 giờ học viên / tháng**.
+- **Impact / tháng của hướng chọn** = 277 lab không xong × 40 phút ≈ **185 giờ học viên / tháng**.
   - 277: `evidence/count.py`, quy đổi 21 ngày ra 30 ngày.
-  - 20 phút: *(tự ước tính)*, thay bằng số từ phỏng vấn trước CP3.
+  - 40 phút: trung vị của P1 (~20 phút) và P4 (~60 phút), xem `evidence/interviews/P1.md`, `P4.md`. Mới có n=2, sẽ tính lại khi có P2–P3.
+  - Đây là mức trần. 59/98 lượt bỏ qua dừng ở bước 0 sau ~2 phút, nên không phải lượt nào cũng mất 40 phút. Lỗi của P4 là lỗi môi trường, ngoài phạm vi công cụ gợi ý bước tiếp theo.
+  - Trước CP3 dùng 20 phút *(tự ước tính)*, ra ~92 giờ.
 - **Hướng đã loại và vì sao:**
   - *Trợ giảng dưới video:* tỉ lệ không trích mốc giây đã tự giảm từ ~54% (13–17/11) xuống ~12% (18–25/11). Hệ thống hiện tại đang cải thiện, pain nhỏ dần.
   - *Báo cáo cho giảng viên:* người dùng ít, khó hẹn trong 2 ngày, chưa có số.
-- **Số lần / tháng của từng kiểu người dùng** (cho persona ở §8): *chưa có*, lấy từ phân bố số lab mở trên mỗi học viên (`evidence/count.py`) và phỏng vấn.
+- **Số lần / tháng của từng kiểu người dùng** (cho persona ở §8): P1 và P4 đều tự báo ~1 lần kẹt / tháng (n=2). Ba persona 1 / 2 / 4 phiên mỗi tháng ở `cost/personas.yaml` là *(tự ước tính)*, mức thấp nhất khớp phỏng vấn.
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
-*(Theo mô tả công khai của từng sản phẩm, nhóm chưa thử tay. Mỗi người thử 10 phút rồi Minh sửa mục này trước CP3.)*
-- **CS50 Duck (Harvard CS50):**
-  - Đáng học: trợ giảng lập trình được dặn chỉ gợi ý, không đưa code lời giải.
-  - Đáng né: gợi ý chung, không gắn với từng bước của bài.
-  - Mình khác: gợi ý dựa trên đề từng bước, và chặn lộ lời giải bằng code, không chỉ dặn trong prompt.
+*(ChatGPT và CS50 Duck: Minh thử tay ngày 28/11 bằng cùng 3 câu dựng từ đề P1 bị kẹt, chi tiết ở `evidence/thu-tay-chatgpt.md` và `evidence/thu-tay-cs50duck.md`. Khanmigo: theo mô tả công khai, nhóm chưa thử tay vì cần tài khoản trả phí.)*
+- **CS50 Duck (Harvard CS50)** *(đã thử tay)*:
+  - Đáng học:
+    - **Không làm hộ.** Với câu xin lời giải, nó trả lời "Mình hiểu bạn đang gấp, nhưng mình không thể làm hộ bài tập này được nhé."
+    - **Giữ đúng phạm vi** của khoá học và trả lời ngắn, chỉ khoảng 3 câu.
+  - Đáng né: khi câu hỏi nằm ngoài phạm vi, nó chỉ từ chối rồi **lặp lại cùng một câu** suốt 3 lượt. Nó không chỉ học viên nên hỏi ai, nên học viên kẹt vẫn kẹt.
+  - Mình khác:
+    - Phạm vi là mini lab pre-class của khoá.
+    - Khi không có căn cứ hoặc gặp chuyện ngoài phạm vi (vd lỗi môi trường như P4), luôn trả **đường lui** cụ thể: hỏi lại đề bước, hoặc chuyển cho lab coach (§4).
 - **Khanmigo (Khan Academy):**
   - Đáng học: hỏi kiểu Socratic, không đưa đáp án.
   - Đáng né: hội thoại dài, tốn lượt.
   - Mình khác: mỗi lượt đúng một gợi ý ngắn, có nhãn hành động rõ.
-- **ChatGPT riêng của học viên:**
-  - Đáng học: có ngay lúc cần.
-  - Đáng né: không biết đề lab, thường đưa luôn lời giải.
-  - Mình khác: có đề lab làm căn cứ, và không đưa lời giải.
+- **ChatGPT riêng của học viên** *(đã thử tay; P1 cũng đang dùng "AI để hỗ trợ")*:
+  - Đáng học: có ngay lúc cần, giải thích dễ hiểu, và hỏi lại học viên đang vướng ở đâu ("Bạn đang gặp khó khăn ở đâu nhất?").
+  - Đáng né:
+    - **Làm hộ khi bị xin.** Với câu "Làm hộ mình luôn sơ đồ đó đi", nó trả lời "Được, mình sẽ làm sẵn cho bạn một sơ đồ hoàn chỉnh để có thể đưa vào mini lab ngay", kèm một đoạn văn để chép vào báo cáo.
+    - **Không biết đề lab.** Nó tự chọn quy trình mẫu và tự đặt số liệu.
+    - **Mỗi lượt dài cả trang.** Khi học viên xin gợi ý thêm, nó viết lại cả trang chứ không thu hẹp thành một gợi ý nhỏ hơn.
+  - Mình khác:
+    - Có đề của từng bước lab làm căn cứ (`get_lab_step`).
+    - Xin lời giải thì từ chối (câu thử B10–B12 ở `eval/benchmark.csv`), và `check_leak` chặn bằng code.
+    - Mỗi lượt chỉ đưa **một** gợi ý ngắn theo thang cấp.
 
 ## §4. Thiết kế *(guide 2.2, 3.2)*
 - **Lát cắt MỘT CÂU:** Một học viên L3 · đang kẹt ở một bước mini lab pre-class, dán lỗi hoặc mô tả chỗ kẹt · AI quyết định đưa **một gợi ý bước tiếp theo** dựa trên đề lab (không đưa lời giải), hoặc hỏi lại khi thiếu thông tin, hoặc từ chối khi ngoài phạm vi · học viên tự làm qua được bước đó.
@@ -179,6 +197,7 @@ flowchart LR
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
 | 27/11/2026 · CP3 | Nối Gemini; triển khai `find_lab`, `get_lab_step`, `check_leak`, kiểm JSON và test guard; dùng bộ 8 bước synthetic theo ba lab có tên trong data hành vi. | Hoàn thiện workflow §4 và chặn lộ lời giải/prompt injection; `eval --try` chạy 3/3 với token >0. Lượt `run-1` sau đó cho thấy cần xem lại B08 và B10; chưa sửa output đã chạy. |
+| 28/11/2026 · CP3 (Minh) | §2: thay "20 phút *(tự ước tính)*" bằng 40 phút (trung vị phỏng vấn), impact từ ~92 lên ~185 giờ / tháng. Viết `evidence/summary.md`. §0, §1 thêm bằng chứng phỏng vấn CP3. §3: thay mục ChatGPT và CS50 Duck bằng kết quả thử tay. | `evidence/interviews/P1.md` (~20 phút) và `P4.md` (~60 phút). n=2, sẽ tính lại khi có P2–P3. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
