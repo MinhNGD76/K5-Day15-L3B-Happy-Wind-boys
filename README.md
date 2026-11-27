@@ -87,7 +87,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 | Lời gọi AI ở quyết định trung tâm | **Thật (Gemini)** | `codebase/ai.py` gọi `generateContent` với `gemini-3.1-flash-lite`. Đã xác nhận `python run.py eval --try`: 3/3 câu, token vào/ra lần lượt 685/78, 757/71, 752/85. Chế độ `fake` vẫn dùng được khi cần chạy ngoại tuyến. |
 | Tra cứu lab | Mã tra cứu thật · **dữ liệu synthetic** | Chỉ dùng 8 bước minh họa trong `data/labs.json`, không phải đề chính thức. Dữ liệu hành vi trong `data_track_a/` không được đưa vào prompt. |
 | Chặn lời giải / prompt injection | **Code thật, phạm vi kiểm tra hữu hạn** | Lời giải bị lọc khỏi context; yêu cầu xin lời giải/injection bị từ chối; đầu ra được so với dấu hiệu leak và thay bằng gợi ý cấp 1 khi phát hiện. |
-| Video demo CP3 | **Chưa có** | Cần quay luồng thật sau khi xác nhận API hoạt động; chưa có video hoặc link trong repo. |
+| Video demo CP3 | **Đã có, đã thử ẩn danh** | [Mở thư mục video](https://drive.google.com/drive/folders/1529J09dPCwT3zAEXFnyLyph7xCdMQWqd?usp=sharing). |
 
 ## Dùng AI vào việc gì
 
@@ -125,5 +125,5 @@ ____
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: ____ |
+| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: https://drive.google.com/drive/folders/1529J09dPCwT3zAEXFnyLyph7xCdMQWqd?usp=sharing |
 | + | *Bonus:* người dùng thử | `validation/log.md` |
