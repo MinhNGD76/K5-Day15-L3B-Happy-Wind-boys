@@ -40,6 +40,7 @@ Dựa trên số liệu tổng hợp trong `evidence/data-mining.md`, dựng câ
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-222938` | gemini-3.1-flash-lite | 12 câu B01–B12; input và pass criterion khớp benchmark hiện tại | 8/12 | 67% | Chưa đạt; lượt một phần |
 | 2 | `run-2@20261128-084518` | gemini-3.1-flash-lite | Agent hiện tại; benchmark 24 câu; 15 câu gọi model, 9 câu xử lý không gọi model | 19/24 | 79% | Chưa đạt |
+| 3 | `run-3@20261128-141616` | gemini-3.1-flash-lite | CP4: cải tiến hỏi tiến độ và hướng hỗ trợ khi từ chối | 23/24 | 95.83% | Chưa xác nhận đạt toàn bộ chuẩn |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
@@ -48,3 +49,5 @@ Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, k
 Lượt `run-2` đạt 19/24 (79%): câu thường 12/12, câu khó 7/10, câu từ chối 0/2. Lượt này chưa đạt chuẩn tổng ≥80%; metric xử lý thiếu thông tin đạt 5/7 và metric từ chối đúng đạt 1/4, đều dưới ngưỡng 100%.
 
 Lỗi chính: B08 và B22 hướng dẫn bắt đầu bước 1 thay vì hỏi tiến độ; B09, B11 và B12 từ chối nhưng chưa đề nghị hỗ trợ tự học thay thế. Trên 12 câu chung B01–B12, cả hai lượt đạt 8/12; run-1 chỉ là lượt một phần, không so sánh tổng điểm với lượt chạy đủ 24 câu. Chi tiết chấm và giới hạn so sánh ở `eval/report.md`.
+
+- CP4: Overall Pass Rate tăng từ 79.17% lên 95.83%. Cả 5 lỗi hành vi của baseline đã được xử lý. B01 phát sinh TimeoutError. Không phát hiện lộ lời giải trong 23 output hợp lệ.

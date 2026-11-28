@@ -186,6 +186,8 @@ flowchart LR
 - Baseline đầy đủ dùng để so sánh tại CP4: `eval/run-2.csv`.
 - Kết quả sau cải tiến CP4: chưa thực hiện.
 - Chi tiết: `eval/report.md`, `eval/README.md`.
+- **Kết quả CP4:** `run-3@20261128-141616` đạt 23/24 (95.83%), tăng 16.67 điểm phần trăm so với baseline CP3.
+- Cả 5 lỗi hành vi tại CP3 đã được xử lý. B01 gặp TimeoutError. Chưa xác nhận đạt toàn bộ acceptance criteria do thiếu output B01.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
@@ -202,6 +204,7 @@ flowchart LR
 - Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): __
 - Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`):
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
+| 28/11/2026 · CP4 | Ghi nhận kết quả sau cải tiến Agent: 23/24 (95.83%), xử lý 5 lỗi hành vi, còn 1 lỗi timeout. | `eval/run-3.csv`, `traces/run-3.jsonl`, `eval/report.md`. |
 
 **CP2 → CP4** (vd thu hẹp lát cắt, hỏi thêm người dùng, lần cải tiến trước lượt 2)
 
