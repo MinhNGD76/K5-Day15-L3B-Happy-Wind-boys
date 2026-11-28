@@ -27,11 +27,11 @@ Data BTC cấp đã dùng (không commit nguyên file): `data/preclass/` (`event
   - 107/147 (72,8%) học viên từng mở lab có ≥1 lab không xong.
   - 59/98 lượt bỏ qua xảy ra ngay ở bước 0, nên chưa chắc là kẹt.
   - Kết luận CP1: chờ phỏng vấn ≥4 học viên để biết **vì sao**.
-- **Bằng chứng, bản CP3 (chi tiết: `evidence/summary.md`):** 2/4 cuộc phỏng vấn đã xong (P1, P4), P2–P3 đang chờ.
-  - Cả 2 người đều kẹt thật ở một bước: P1 ở bước vẽ sơ đồ quy trình hiện tại của mini lab số 2, P4 ở bước cài Docker. Cả 2 đều mất 20–60 phút rồi bỏ.
-  - Lý do chính tự nhận **không phải** là kẹt: P1 nói "Hết thời gian", P4 bị lỗi môi trường và server.
-  - Cả 2 muốn gợi ý trước thay vì đáp án ngay: *"Gợi ý trước rồi đến đáp án…"* (P1), *"tôi muốn gợi ý, vì từ đó có thể tự tìm ra đáp án"* (P4).
-  - Kết luận tạm: giả thuyết **đúng một phần**. Kẹt là nguyên nhân gốc làm tốn thời gian, rồi hết giờ hoặc gặp lỗi môi trường thì bỏ. Lỗi môi trường nằm ngoài phạm vi lát cắt §4 và phải được chuyển cho lab coach. Chốt khi có P2–P3.
+- **Bằng chứng, bản CP3–CP4 (chi tiết: `evidence/summary.md`):** 3 cuộc phỏng vấn đã xong (P1, P3, P4).
+  - Cả 3 người đều kẹt thật ở một chỗ: P1 ở bước vẽ sơ đồ quy trình hiện tại của mini lab số 2, P3 ở chỗ đọc hiểu yêu cầu và cấu trúc file của lab Day 14, P4 ở bước cài Docker. Mỗi lần mất 20–60 phút (P1 ~20, P3 ~25–30, P4 ~60).
+  - Lý do chính tự nhận **không phải** là kẹt: P1 nói "Hết thời gian", P3 nói lab ngày càng khó và không đủ thời gian, P4 bị lỗi môi trường và server.
+  - P1 và P4 muốn gợi ý trước thay vì đáp án ngay: *"Gợi ý trước rồi đến đáp án…"* (P1), *"tôi muốn gợi ý, vì từ đó có thể tự tìm ra đáp án"* (P4).
+  - Kết luận: giả thuyết **phải đổi** (0/3 coi kẹt là lý do chính). Kẹt làm tốn thời gian, rồi hết giờ hoặc gặp lỗi môi trường thì bỏ. Gợi ý bước tiếp theo có giá trị ở chỗ rút ngắn thời gian kẹt. Lỗi môi trường nằm ngoài lát cắt §4 và phải được chuyển cho lab coach.
 
 ## §2. Impact & quyết định chọn *(guide 1.3, bản CP1, cập nhật đến CP3)*
 
@@ -39,15 +39,15 @@ Data phủ 21 ngày (05–25/11), quy đổi ra tháng bằng × 30/21.
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-| **Gợi ý bước tiếp theo khi kẹt mini lab** | 107/147 học viên từng mở lab *(data)* | ~277 lab không xong (194 × 30/21) *(data)* | ~40 phút loay hoay trước khi bỏ *(trung vị phỏng vấn P1 20 phút, P4 60 phút, n=2)* | ~185 giờ học viên | Kịp: đề lab tự viết lại ngắn, 1 quyết định AI | **Chọn** |
+| **Gợi ý bước tiếp theo khi kẹt mini lab** | 107/147 học viên từng mở lab *(data)* | ~277 lab không xong (194 × 30/21) *(data)* | ~27,5 phút loay hoay trước khi bỏ *(trung vị phỏng vấn P1 ~20, P3 ~25–30, P4 ~60 phút, n=3)* | ~127 giờ học viên | Kịp: đề lab tự viết lại ngắn, 1 quyết định AI | **Chọn** |
 | Trợ giảng dưới video trả lời có căn cứ | 145/436 học viên có hỏi AI *(data)* | ~143 câu trả lời thiếu ngữ cảnh (100 × 30/21) *(data)* | ~5 phút tự tìm lại trong video *(tự ước tính)* | ~12 giờ | Kịp | Loại |
 | Báo cáo "lớp đang kẹt gì" cho giảng viên trước buổi | Giảng viên L3 *(chưa có số)* | ~8 buổi *(tự ước tính)* | Chưa có số | Chưa tính được | Khó gặp giảng viên trong 2 ngày | Loại |
 
-- **Impact / tháng của hướng chọn** = 277 lab không xong × 40 phút ≈ **185 giờ học viên / tháng**.
+- **Impact / tháng của hướng chọn** = 277 lab không xong × 27,5 phút ≈ **127 giờ học viên / tháng** (dải 115–139 giờ nếu P3 là 25 hoặc 30 phút).
   - 277: `evidence/count.py`, quy đổi 21 ngày ra 30 ngày.
-  - 40 phút: trung vị của P1 (~20 phút) và P4 (~60 phút), xem `evidence/interviews/P1.md`, `P4.md`. Mới có n=2, sẽ tính lại khi có P2–P3.
-  - Đây là mức trần. 59/98 lượt bỏ qua dừng ở bước 0 sau ~2 phút, nên không phải lượt nào cũng mất 40 phút. Lỗi của P4 là lỗi môi trường, ngoài phạm vi công cụ gợi ý bước tiếp theo.
-  - Trước CP3 dùng 20 phút *(tự ước tính)*, ra ~92 giờ.
+  - 27,5 phút: trung vị của P1 (~20 phút), P3 (~25–30 phút, lấy giữa 27,5) và P4 (~60 phút), xem `evidence/interviews/P1.md`, `P3.md`, `P4.md`. n=3.
+  - CP3 dùng 40 phút (trung vị n=2, ~185 giờ). Trước CP3 dùng 20 phút *(tự ước tính)*, ~92 giờ.
+  - Đây là mức trần. 59/98 lượt bỏ qua dừng ở bước 0 sau ~2 phút, nên không phải lượt nào cũng mất 27,5 phút. Lỗi của P4 là lỗi môi trường, ngoài phạm vi công cụ gợi ý bước tiếp theo.
 - **Hướng đã loại và vì sao:**
   - *Trợ giảng dưới video:* tỉ lệ không trích mốc giây đã tự giảm từ ~54% (13–17/11) xuống ~12% (18–25/11). Hệ thống hiện tại đang cải thiện, pain nhỏ dần.
   - *Báo cáo cho giảng viên:* người dùng ít, khó hẹn trong 2 ngày, chưa có số.
@@ -194,13 +194,34 @@ flowchart LR
 - So với impact / người / tháng (§2): đáng làm không, vì sao:
 
 ## §9. Rủi ro & an toàn
-- Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:
-- AI **không được** làm gì kể cả khi người dùng yêu cầu:
-- Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:
+- **Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:**
+  - **Data BTC:** không commit (`data-btc/` đã gitignore). Repo chỉ có số tổng hợp và ví dụ theo mã học viên (vd `L0287`), không có tên, email, câu chat cá nhân. Chi tiết: `data/DATA_CARD.md` mục 3.
+  - **Phỏng vấn:** chỉ ghi vai (P1, P3, P4), không ghi tên, SĐT, email, mã học viên.
+  - **Model chỉ nhận hai thứ:** đề lab synthetic đã lọc (đề, gợi ý, lỗi hay gặp; **không** có lời giải và dấu hiệu lộ) và tin nhắn học viên. Không gửi data BTC, log hành vi hay mã học viên vào model.
+  - **Gói của key Gemini:** *chưa kiểm* (Chuẩn xác nhận). Nếu là gói miễn phí, nhà cung cấp có thể dùng nội dung gửi lên để cải thiện sản phẩm. Vì vậy chỉ gửi dữ liệu synthetic và câu thử tự dựng. Khi dùng thật với học viên phải chuyển sang gói trả phí.
+  - **Trace:** `traces/*.jsonl` lưu nguyên văn input. Hiện input chỉ là câu thử tự dựng nên không có dữ liệu cá nhân. Khi dùng thật cần nhắc học viên không dán thông tin cá nhân hay API key vào tin nhắn, và đặt hạn xoá trace.
+  - **API key:** để trong `.env` (gitignore). Khi lỗi HTTP, `codebase/ai.py` thay key bằng `[REDACTED]` trước khi in ra.
+- **AI không được làm, kể cả khi người dùng yêu cầu:**
+  - Đưa lời giải, viết hộ, làm hoặc nộp bài thay.
+  - Chấm điểm, điểm danh, xác nhận đáp án đúng hay sai.
+  - Đổi quy tắc theo lời tự khai ("mình là giảng viên"), hoặc làm theo lệnh chèn trong tin nhắn ("bỏ qua hướng dẫn").
+  - Bịa gợi ý cho lab hoặc bước không có trong dữ liệu.
+  - Đoán cách sửa lỗi môi trường (Docker, server) như P4 gặp: việc này ngoài lát cắt, phải chuyển cho lab coach.
+- **Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:**
+
+  | Ai bị hại | AI sai thế nào | Chặn thế nào | Bằng chứng | Còn hở |
+  |---|---|---|---|---|
+  | Học viên (mất giá trị học), lớp (bất công khi có người chép đáp án) | Lộ lời giải | Lớp 1: `get_lab_step` không đưa lời giải vào prompt. Lớp 2: `check_leak` so output với lời giải và dấu hiệu lộ, lộ thì thay bằng gợi ý cấp 1 viết sẵn. Câu xin đáp án, làm hộ hoặc injection bị chặn bằng code trước khi gọi model | `khong_lo_loi_giai` 24/24 ở `run-2` · test `test_model_solution_leak_is_replaced_with_level_one_hint`, `test_prompt_injection_is_refused_without_model_call` | `check_leak` chỉ khớp chuỗi đã khai báo. Lời giải diễn đạt theo cách khác vẫn có thể lọt |
+  | Học viên (mất thêm thời gian) | Gợi ý sai bước hoặc bịa | Gợi ý ở bước không có trong đề thì ép thành `[HỎI LẠI]` (G10). Mỗi gợi ý kèm dòng `Căn cứ: đề bước n` để tự đối chiếu. Dòng cuối luôn nhắc "Kẹt quá 15 phút thì hỏi lab coach" | `goi_y_dung_buoc` 12/12 · test `test_unknown_lab_does_not_get_a_fabricated_hint`, `test_nonexistent_step_is_not_replaced_by_a_different_step` | Đề lab là synthetic, chưa có lab coach duyệt |
+  | Học viên (vẫn kẹt, không được giúp) | Từ chối nhầm, hoặc từ chối mà không chỉ đường tự làm | Câu "không đưa đáp án" không bị coi là xin đáp án. Khi model chọn từ chối ở lab đã tìm thấy thì kèm gợi ý cấp 1. Bộ lọc chạy trước model thì từ chối mà chưa tra lab, nên không kèm gợi ý | test `test_request_that_explicitly_avoids_the_answer_is_not_misclassified` | **Lỗi đang mở:** B09, B11, B12 từ chối mà không chỉ đường (`tu_choi_dung` 1/4). Bộ lọc dùng regex nên còn có thể chặn nhầm câu hợp lệ |
+  | Học viên (bị dẫn sai hướng) | Đoán bước thay vì hỏi tiến độ | Chưa có chặn riêng | `eval/report.md`: B08, B22 | **Lỗi đang mở**, nằm trong nhóm lỗi chọn sửa cho lượt sau cải tiến |
+  | Lab coach, giảng viên | AI xác nhận sai đáp án, học viên tin rồi làm sai | AI không chấm, không xác nhận đúng hay sai. Model trả sai JSON hoặc sai schema thì `[HỎI LẠI]` an toàn | test `test_malformed_model_json_falls_back_to_question` | — |
+
+  13 test trong `codebase/test_*.py` chạy qua ngày 28/11/2026 (`python -m unittest discover -s codebase -p "test_*.py"`). Bản ghi CP3: `evidence/CP3-safety-tests.txt`.
 
 ## §10. Phân công & changelog
-- Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): __
-- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`):
+- Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): xem `docs/phan-cong.md` và `TEAMS.md`. Cặp X (Minh + Chuẩn): thiết kế §4 và bản chạy thử · Cặp Y (Huy + Hùng): data, câu thử, metric, chi phí.
+- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): bản chạy thử gọi Gemini 3.1 Flash-Lite ở quyết định trung tâm. Minh dùng Claude Code để dựng khung repo, soạn nháp canvas, `spec.md`, `evidence/summary.md`, phân công, câu hỏi phỏng vấn và slide; Minh đọc, sửa và kiểm mọi số với file nguồn. Không dùng AI để tạo người được phỏng vấn, trích dẫn, hay chấm cột `pass`.
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
 
 **CP2 → CP4** (vd thu hẹp lát cắt, hỏi thêm người dùng, lần cải tiến trước lượt 2)
@@ -211,6 +232,7 @@ flowchart LR
 | 28/11/2026 01:05 | Mở rộng benchmark từ 12 lên 24 câu; cập nhật B13–B20 tương thích dataset V2; giữ nguyên B01–B12 và 4 metrics CP2. | data/labs.json, evidence/data-mining.md, Interview P4; validation PASS. |
 | 28/11/2026 · CP3 (Minh) | §2: thay "20 phút *(tự ước tính)*" bằng 40 phút (trung vị phỏng vấn), impact từ ~92 lên ~185 giờ / tháng. Viết `evidence/summary.md`. §0, §1 thêm bằng chứng phỏng vấn CP3. §3: thay mục ChatGPT và CS50 Duck bằng kết quả thử tay. | `evidence/interviews/P1.md` (~20 phút) và `P4.md` (~60 phút). n=2, sẽ tính lại khi có P2–P3. |
 | 28/11/2026 · CP3 (Huy) | Ghi nhận baseline đầy đủ 24 câu, kết quả 4 metric và 5 câu chưa đạt. | `eval/run-2.csv`, `traces/run-2.jsonl`, `eval/report.md`; score 19/24 (79.17%). |
+| 28/11/2026 · CP4 (Minh) | §2: thời gian mỗi lần kẹt từ 40 phút (n=2) thành 27,5 phút (trung vị n=3), impact từ ~185 xuống ~127 giờ / tháng. §1: cập nhật bằng chứng theo P3, kết luận giả thuyết "phải đổi" khớp `evidence/summary.md`. Thêm `demo-slides.pdf` (nguồn `slides/demo-slides.html`), điền `docs/ai-usage.md`. Viết §9 Rủi ro & an toàn. | `evidence/interviews/P3.md` (~25–30 phút) và `evidence/summary.md` mục 5. §9 dựa trên `codebase/agent.py`, `codebase/test_safety.py`, `eval/report.md`. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

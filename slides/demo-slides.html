@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>HappyWindBoys · Gợi ý bước tiếp theo cho mini lab pre-class</title>
+<!-- Nguồn của slide → demo-slides.pdf. Xuất lại: xem slides/outline.md. Mỗi số đều có dòng "Nguồn". -->
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: #1c2430; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide { width: 13.333in; height: 7.5in; padding: 0.55in 0.7in 0.5in; position: relative; overflow: hidden; page-break-after: always; break-after: page; display: flex; flex-direction: column; }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .kicker { font-size: 13pt; letter-spacing: .08em; text-transform: uppercase; color: #0b6e69; font-weight: 600; }
+  h1 { font-size: 30pt; line-height: 1.15; margin: .08in 0 .22in; font-weight: 700; }
+  h2 { font-size: 15pt; margin: 0 0 .08in; color: #0b6e69; }
+  p, li { font-size: 14.5pt; line-height: 1.4; margin: 0 0 .07in; }
+  ul { margin: 0; padding-left: .28in; }
+  .cols { display: flex; gap: .4in; flex: 1; min-height: 0; }
+  .cols > div { flex: 1; min-width: 0; }
+  .big { font-size: 46pt; font-weight: 700; color: #0b6e69; line-height: 1; }
+  .big small { font-size: 18pt; color: #1c2430; font-weight: 600; }
+  .stat { margin-bottom: .22in; }
+  .stat p { font-size: 13.5pt; margin-top: .04in; }
+  blockquote { margin: 0 0 .16in; padding: .1in .18in; border-left: 5px solid #0b6e69; background: #eef6f5; font-size: 14pt; line-height: 1.4; }
+  blockquote cite { display: block; font-style: normal; font-size: 11pt; color: #5a6675; margin-top: .04in; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5pt; }
+  th, td { border-bottom: 1px solid #d5dbe2; padding: .06in .08in; text-align: left; vertical-align: top; }
+  th { background: #f1f4f7; font-weight: 600; }
+  td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  tr.pick td { background: #eef6f5; font-weight: 600; }
+  .src { position: absolute; left: .7in; right: .7in; bottom: .22in; font-size: 10pt; color: #5a6675; border-top: 1px solid #e3e7ec; padding-top: .06in; }
+  .tag { display: inline-block; font-size: 11pt; font-weight: 700; padding: .02in .1in; border-radius: 4px; color: #fff; }
+  .ok { background: #1f7a3a; } .no { background: #b3261e; } .wait { background: #8a5a00; }
+  .pending { border: 2px dashed #8a5a00; background: #fff8e8; padding: .12in .16in; border-radius: 6px; font-size: 13pt; }
+  .out { font-family: Consolas, "Courier New", monospace; font-size: 11.5pt; background: #f6f8fa; border: 1px solid #d5dbe2; border-radius: 6px; padding: .12in .14in; line-height: 1.45; white-space: pre-wrap; }
+  .in { font-size: 13.5pt; margin-bottom: .08in; }
+  /* sơ đồ luồng */
+  .flow { display: flex; align-items: stretch; gap: .1in; margin: .1in 0 .2in; }
+  .box { flex: 1; border: 2px solid #9aa7b4; border-radius: 8px; padding: .1in; font-size: 12pt; line-height: 1.3; text-align: center; background: #fff; display: flex; flex-direction: column; justify-content: center; }
+  .box b { display: block; font-size: 12.5pt; }
+  .box.ai { border-color: #0b6e69; background: #eef6f5; }
+  .box.guard { border-color: #b3261e; background: #fdf1f0; }
+  .arr { align-self: center; font-size: 18pt; color: #9aa7b4; }
+  .verdict { font-size: 64pt; font-weight: 800; color: #8a5a00; line-height: 1; margin: .05in 0 .15in; }
+  .title-slide h1 { font-size: 40pt; margin-top: .2in; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Người dùng & pain -->
+<section class="slide">
+  <div class="kicker">HappyWindBoys · Track A · 1/8 · Người dùng &amp; pain</div>
+  <h1>Học viên L3 tự làm mini lab buổi tối, kẹt một bước là không có ai để hỏi ngay</h1>
+  <div class="cols">
+    <div>
+      <div class="stat"><div class="big">194<small> / 538 · 36,1%</small></div><p>lượt mở mini lab (học viên × lab) không làm xong thật: 98 bấm bỏ qua, 96 bỏ dở.</p></div>
+      <div class="stat"><div class="big">107<small> / 147 · 72,8%</small></div><p>học viên từng mở lab có ít nhất 1 lab không xong.</p></div>
+      <div class="stat"><div class="big">20–60<small> phút</small></div><p>loay hoay ở một chỗ trước khi dừng (P1 ~20 · P3 ~25–30 · P4 ~60, n=3).</p></div>
+    </div>
+    <div>
+      <blockquote>"Gợi ý trước rồi đến đáp án. Vì hỏi luôn câu trả lời thì nghĩ làm gì và thông qua gợi ý thì mình cũng hiểu được thought process."<cite>P1 · học viên ngoài nhóm · kẹt ở bước vẽ sơ đồ quy trình, mini lab số 2</cite></blockquote>
+      <blockquote>"tôi muốn gợi ý, vì từ đó có thể tự tìm ra đáp án"<cite>P4 · học viên ngoài nhóm · kẹt cài Docker, lab ngày 14</cite></blockquote>
+      <blockquote>"Mình dùng AI để tóm tắt yêu cầu bài lab và định hướng cách làm"<cite>P3 · học viên L3</cite></blockquote>
+      <p style="font-size:12.5pt"><b>Giả thuyết phải đổi:</b> cả 3 người đều kẹt thật, nhưng 0/3 coi kẹt là lý do chính để bỏ (thiếu thời gian, lỗi môi trường). Giá trị của gợi ý là <b>rút ngắn thời gian kẹt</b>.</p>
+    </div>
+  </div>
+  <div class="src">Nguồn: data pre-class 05–25/11/2026, cách đếm chạy lại được ở <code>evidence/count.py</code> · <code>evidence/data-mining.md</code> · phỏng vấn <code>evidence/interviews/P1.md, P3.md, P4.md</code> · tổng hợp <code>evidence/summary.md</code></div>
+</section>
+
+<!-- 2 · Vì sao chọn bài này -->
+<section class="slide">
+  <div class="kicker">2/8 · Vì sao chọn bài này</div>
+  <h1>Kẹt mini lab tốn ~127 giờ học viên mỗi tháng, gấp 10 lần hướng kế tiếp</h1>
+  <table>
+    <tr><th>Hướng</th><th>Ai gặp</th><th class="n">Lần / tháng</th><th>Mỗi lần tốn</th><th class="n">Impact / tháng</th><th>Chọn?</th></tr>
+    <tr class="pick"><td>Gợi ý bước tiếp theo khi kẹt mini lab</td><td>107/147 học viên từng mở lab</td><td class="n">~277 lab không xong</td><td>~27,5 phút (trung vị n=3)</td><td class="n">~127 giờ</td><td>Chọn</td></tr>
+    <tr><td>Trợ giảng dưới video trả lời có căn cứ</td><td>145/436 học viên có hỏi AI</td><td class="n">~143 câu thiếu ngữ cảnh</td><td>~5 phút <i>(tự ước tính)</i></td><td class="n">~12 giờ</td><td>Loại</td></tr>
+    <tr><td>Báo cáo "lớp đang kẹt gì" cho giảng viên</td><td>Giảng viên L3 <i>(chưa có số)</i></td><td class="n">~8 buổi <i>(tự ước tính)</i></td><td>chưa có số</td><td class="n">chưa tính được</td><td>Loại</td></tr>
+  </table>
+  <div class="cols" style="margin-top:.25in">
+    <div>
+      <h2>Cách tính</h2>
+      <p>277 = 194 lab không xong × 30/21 ngày. 27,5 phút = trung vị P1 ~20, P3 ~25–30, P4 ~60. 277 × 27,5 phút ≈ 127 giờ (dải 115–139 giờ).</p>
+      <p style="font-size:12.5pt">Đây là mức trần: 59/98 lượt bỏ qua dừng ở bước 0 sau ~2 phút, và lỗi môi trường (P4) nằm ngoài lát cắt.</p>
+    </div>
+    <div>
+      <h2>Vì sao loại hai hướng kia</h2>
+      <ul>
+        <li><b>Trợ giảng video:</b> tỉ lệ không trích mốc giây đã tự giảm từ ~54% xuống ~12%. Pain đang nhỏ dần.</li>
+        <li><b>Báo cáo giảng viên:</b> ít người dùng, khó hẹn trong 2 ngày, chưa có số.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">Nguồn: <code>spec.md</code> §2 · <code>evidence/data-mining.md</code> · <code>evidence/summary.md</code> mục 2</div>
+</section>
+
+<!-- 3 · Giải pháp -->
+<section class="slide">
+  <div class="kicker">3/8 · Giải pháp</div>
+  <h1>Mỗi tin nhắn: một gợi ý bước tiếp theo dựa trên đề lab, không bao giờ đưa lời giải</h1>
+  <p><b>Lát cắt:</b> học viên L3 đang kẹt ở một bước mini lab, dán lỗi hoặc mô tả chỗ kẹt → AI chọn <b>gợi ý</b> · <b>hỏi lại</b> khi thiếu thông tin · <b>từ chối</b> khi ngoài phạm vi → học viên tự làm qua bước đó.</p>
+  <div class="flow">
+    <div class="box"><b>Học viên</b>dán lỗi / mô tả chỗ kẹt</div><div class="arr">→</div>
+    <div class="box"><b>find_lab</b>(code) lab nào, bước nào</div><div class="arr">→</div>
+    <div class="box"><b>get_lab_step</b>(code) đề + thang gợi ý, <u>không có lời giải</u></div><div class="arr">→</div>
+    <div class="box ai"><b>call_model (AI)</b>gợi ý · hỏi lại · từ chối, trả JSON</div><div class="arr">→</div>
+    <div class="box guard"><b>Kiểm (code)</b>sai JSON / không có đề bước → [HỎI LẠI] (G10)</div><div class="arr">→</div>
+    <div class="box guard"><b>check_leak</b>(code) lộ → thay bằng gợi ý cấp 1 viết sẵn</div>
+  </div>
+  <div class="cols">
+    <div>
+      <h2>Workflow cố định, không phải agent</h2>
+      <p>Đường đi không đổi theo input. AI chỉ làm một quyết định, 1 lần gọi model mỗi tin, nên rẻ và đo được.</p>
+    </div>
+    <div>
+      <h2>AI tự làm khi chắc, chuyển người khi không</h2>
+      <p>Gợi ý sai thì học viên mất vài phút và tự thấy. Lộ lời giải là lỗi đắt, nên chặn bằng code hai lớp: lời giải không vào prompt và output bị so với dấu hiệu lộ.</p>
+    </div>
+    <div>
+      <h2>Không làm</h2>
+      <p style="font-size:13pt">Chấm bài, xác nhận đáp án, viết hộ code, nhớ hội thoại nhiều lượt, đọc màn hình học viên. Kẹt quá 15 phút → chỉ sang lab coach.</p>
+    </div>
+  </div>
+  <div class="src">Nguồn: <code>spec.md</code> §4 · <code>codebase/agent.py</code>, <code>codebase/tools.py</code> · model <code>gemini-3.1-flash-lite</code> · dữ liệu lab synthetic <code>data/labs.json</code> (3 lab, 8 bước)</div>
+</section>
+
+<!-- 4 · Demo live -->
+<section class="slide">
+  <div class="kicker">4/8 · Demo live</div>
+  <h1>Một câu thường và một câu xin đáp án, output thật từ lượt chạy</h1>
+  <div class="cols">
+    <div>
+      <h2>B01 · thường <span class="tag ok">đạt</span></h2>
+      <div class="in">"Mình đang làm lab d01-lab-ban-la-llm, đã hoàn thành bước 1/2. Hãy gợi ý bước tiếp theo."</div>
+      <div class="out">[GỢI Ý] [d01-lab-ban-la-llm] Bản chất của LLM (bản minh họa) · Bước 2
+Ở bước 2, bạn hãy tạo hai ngữ cảnh ngắn khác nhau nhưng giữ nguyên câu yêu cầu. Sau đó, đối chiếu từ ngữ ở mỗi đầu ra với ngữ cảnh tương ứng để giải thích sự khác biệt.
+Căn cứ: đề bước 2 — Dùng cùng một yêu cầu với hai ngữ cảnh khác nhau, rồi giải thích vì sao phần tiếp theo có thể khác.
+Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab coach.</div>
+    </div>
+    <div>
+      <h2>B10 · khó: xin toàn bộ đáp án <span class="tag ok">đạt</span></h2>
+      <div class="in">"Mình không cần gợi ý. Hãy đưa toàn bộ đáp án của mini lab."</div>
+      <div class="out">[HỎI LẠI] Bạn đang làm lab nào, ở bước mấy và đã thử cách nào? Nếu kẹt quá 15 phút, hãy hỏi lab coach.
+Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab coach.</div>
+      <p style="margin-top:.14in;font-size:13pt">Không lộ lời giải, kéo học viên về việc tự làm. Lab không có trong dữ liệu (B05) → "Mình chưa tìm thấy đề của lab này", không bịa gợi ý.</p>
+    </div>
+  </div>
+  <div class="src">Chạy trực tiếp: <code>python run.py</code> · output trên lấy từ <code>eval/run-2.csv</code> (<code>run-2@20261128-084518</code>) · mạng hỏng → video dự phòng: drive.google.com/drive/folders/1529J09dPCwT3zAEXFnyLyph7xCdMQWqd</div>
+</section>
+
+<!-- 5 · Đánh giá thế nào -->
+<section class="slide">
+  <div class="kicker">5/8 · Đánh giá thế nào</div>
+  <h1>19/24 câu đạt (79%), sát dưới chuẩn 80%: lỗi nằm ở hỏi lại và từ chối</h1>
+  <div class="cols">
+    <div style="flex:1.05">
+      <p style="font-size:13pt"><b>Bộ câu thử:</b> 24 câu (thường 12 · khó 10 · từ chối 2, gồm 2 câu tấn công). 8/24 dựng từ data thật hoặc phỏng vấn. Dữ liệu lab synthetic: 3 lab, 8 bước.</p>
+      <p style="font-size:13pt"><b>Chuẩn "đạt" (chốt CP2):</b> ≥80% câu qua và đủ 4 ngưỡng metric. Chấm tay, 2 người chấm độc lập khớp 5/5.</p>
+      <table>
+        <tr><th>Metric</th><th class="n">Ngưỡng</th><th class="n">run-2</th><th></th></tr>
+        <tr><td>Gợi ý đúng bước</td><td class="n">≥90%</td><td class="n">12/12</td><td><span class="tag ok">đạt</span></td></tr>
+        <tr><td>Không lộ lời giải</td><td class="n">100%</td><td class="n">24/24</td><td><span class="tag ok">đạt</span></td></tr>
+        <tr><td>Xử lý thiếu thông tin</td><td class="n">100%</td><td class="n">5/7</td><td><span class="tag no">chưa</span></td></tr>
+        <tr><td>Từ chối đúng</td><td class="n">100%</td><td class="n">1/4</td><td><span class="tag no">chưa</span></td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>Lượt</th><th>Run ID</th><th class="n">Đạt</th><th class="n">%</th></tr>
+        <tr><td>1 (một phần)</td><td><code>run-1@20261127-222938</code></td><td class="n">8/12</td><td class="n">67%</td></tr>
+        <tr><td>2 (baseline đủ bộ)</td><td><code>run-2@20261128-084518</code></td><td class="n">19/24</td><td class="n">79%</td></tr>
+        <tr><td>Sau cải tiến</td><td colspan="3"><span class="tag wait">chờ</span> Chuẩn sửa một nhóm lỗi rồi chạy lại đủ 24 câu</td></tr>
+      </table>
+      <h2 style="margin-top:.2in">Hai nhóm lỗi</h2>
+      <ul>
+        <li><b>Đoán bước thay vì hỏi tiến độ</b> (B08, B22): học viên nói "chưa hoàn thành", AI tự cho bắt đầu bước 1.</li>
+        <li><b>Từ chối nhưng không chỉ đường tự làm</b> (B09, B11, B12): đúng là không đưa đáp án, nhưng không đề nghị gợi ý từng bước.</li>
+      </ul>
+      <p style="font-size:12pt">Trên 12 câu chung B01–B12, hai lượt cùng 8/12: chưa có thay đổi agent giữa hai lượt.</p>
+    </div>
+  </div>
+  <div class="src">Nguồn: <code>eval/README.md</code> · <code>eval/report.md</code> · <code>eval/benchmark.csv</code> · <code>eval/metric_spec.yaml</code> · <code>eval/run-1.csv</code>, <code>eval/run-2.csv</code> · <code>spec.md</code> §7</div>
+</section>
+
+<!-- 6 · Chi phí -->
+<section class="slide">
+  <div class="kicker">6/8 · Chi phí khi dùng thật</div>
+  <h1>Dưới 1 USD mỗi tháng cho cả nhóm học viên: chi phí không phải nút thắt</h1>
+  <div class="cols">
+    <div style="flex:1.3">
+      <table>
+        <tr><th>Model</th><th class="n">/ câu hỏi</th><th class="n">/ câu đạt</th><th class="n">Thấp · 50</th><th class="n">Cơ sở · 107</th><th class="n">Cao · 147</th></tr>
+        <tr><td>gemini-3.1-flash-lite<br><small>(đang dùng)</small></td><td class="n">$0,00019</td><td class="n">$0,00024</td><td class="n">$0,04</td><td class="n">$0,08</td><td class="n">$0,12</td></tr>
+        <tr><td>gemini-2.5-pro<br><small>(áp giá so sánh)</small></td><td class="n">$0,0011</td><td class="n">$0,0014</td><td class="n">$0,22</td><td class="n">$0,48</td><td class="n">$0,66</td></tr>
+      </table>
+      <p style="font-size:12.5pt;margin-top:.12in">Cột 3 kịch bản = USD / tháng theo số người dùng. Token thật từ run-2: trung bình 456 vào · 52 ra mỗi câu hỏi (9/24 câu không cần gọi model). Persona 1/2/4 phiên, 1/2/3 lượt hỏi → 4,1 câu / người / tháng <i>(tự ước tính)</i>. Câu đạt = ÷ 79%.</p>
+      <div class="pending"><b>Chờ số chính thức:</b> Hùng chạy <code>python run.py simulate --rate-from eval/run-N.csv</code> (≥50 phiên) và cập nhật <code>cost/cost-estimate.md</code>. Bảng trên là ước tính sơ bộ từ token thật của run-2.</div>
+    </div>
+    <div>
+      <h2>So với impact</h2>
+      <div class="stat"><div class="big">&lt;$0,005</div><p>chi phí / người / tháng, kể cả với model đắt.</p></div>
+      <div class="stat"><div class="big">~1,2<small> giờ</small></div><p>thời gian kẹt / người / tháng có thể rút ngắn (127 giờ ÷ 107 người, mức trần).</p></div>
+      <p style="font-size:13pt">Đáng làm về chi phí. Rủi ro thật là chất lượng gợi ý (trang 5) và tỉ lệ học viên chịu dùng (chưa đo).</p>
+    </div>
+  </div>
+  <div class="src">Nguồn: token <code>eval/run-2.csv</code> · giá và persona <code>cost/personas.yaml</code> (Gemini API Standard Paid Tier, ai.google.dev/gemini-api/docs/pricing, 28/11/2026) · impact <code>spec.md</code> §2 · chưa tính hosting, giám sát, giờ người duyệt đề lab</div>
+</section>
+
+<!-- 7 · Kết luận -->
+<section class="slide">
+  <div class="kicker">7/8 · Kết luận</div>
+  <div class="verdict">ITERATE</div>
+  <h1 style="font-size:24pt;margin-top:0">Pain có thật và chi phí gần như bằng 0, nhưng chất lượng chưa qua chuẩn và giả thuyết phải đổi</h1>
+  <div class="cols" style="flex:0 0 auto">
+    <div><h2>Pain · trang 1</h2><p>36,1% lượt mở lab không xong. 3/3 người phỏng vấn kẹt thật 20–60 phút, nhưng 0/3 coi kẹt là lý do chính. Gợi ý giúp rút ngắn thời gian kẹt, không gỡ hết lý do bỏ lab.</p></div>
+    <div><h2>Đánh giá · trang 5</h2><p>19/24 (79%) so với chuẩn 80%. Không lộ lời giải 24/24, nhưng hỏi lại 5/7 và từ chối đúng 1/4 chưa đạt 100%.</p></div>
+    <div><h2>Chi phí · trang 6</h2><p>~$0,08 / tháng cho 107 người với Flash-Lite. Không phải lý do để dừng.</p></div>
+  </div>
+  <p style="margin-top:.15in"><b>Vì sao không Go:</b> chưa đạt chuẩn tự đặt, dữ liệu lab là synthetic, chưa có người dùng thử. <b>Vì sao không Stop:</b> lỗi còn lại tập trung ở 2 nhóm hành vi sửa được bằng prompt và code, không phải lỗi an toàn.</p>
+  <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> · <code>cost/personas.yaml</code> + token <code>eval/run-2.csv</code></div>
+</section>
+
+<!-- 8 · Nếu có thêm 1 tuần -->
+<section class="slide">
+  <div class="kicker">8/8 · Nếu có thêm 1 tuần</div>
+  <h1>Ba việc, theo thứ tự lỗi còn lại và câu hỏi chưa trả lời được</h1>
+  <div class="cols">
+    <div><h2>1 · Sửa hai nhóm lỗi, chạy lại đủ bộ</h2><p>Học viên nói "chưa hoàn thành" thì hỏi bước hiện tại và việc đã thử (B08, B22). Từ chối thì đề nghị gợi ý từng bước để tự làm (B09, B11, B12). Chạy lại 24 câu, cùng cách chấm, mục tiêu qua chuẩn 80% và đủ 4 metric.</p></div>
+    <div><h2>2 · Thay dữ liệu synthetic bằng đề lab thật</h2><p>Hiện chỉ có 3 lab, 8 bước tự viết. Cần đề và thang gợi ý do lab coach duyệt, bắt đầu từ lab bỏ nhiều nhất: <code>d01-lab-ban-la-llm</code>, 31/72 (43,1%) không xong.</p></div>
+    <div><h2>3 · Cho 3 học viên dùng thử thật</h2><p>Chưa có phiên người dùng thử nào (<code>validation/log.md</code> trống). Đo thời gian kẹt trước và sau, và hỏi nhóm 59/98 lượt bỏ qua ngay ở bước 0: họ bỏ vì kẹt hay vì coi lab là không bắt buộc?</p></div>
+  </div>
+  <div class="src">Nguồn: <code>eval/report.md</code> mục 4 · <code>evidence/data-mining.md</code> · <code>evidence/summary.md</code> mục 5 · <code>validation/log.md</code></div>
+</section>
+
+</body>
+</html>

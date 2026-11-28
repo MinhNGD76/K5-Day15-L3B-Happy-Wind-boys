@@ -93,7 +93,9 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-____
+- **Trong sản phẩm:** bản chạy thử gọi Gemini 3.1 Flash-Lite đúng một lần mỗi tin nhắn để chọn gợi ý / hỏi lại / từ chối; chặn lộ lời giải bằng code, không nhờ AI.
+- **Khi làm bài:** Minh dùng Claude Code để dựng khung repo và soạn nháp canvas, `spec.md`, `evidence/summary.md`, câu hỏi phỏng vấn, slide. Minh đọc lại, sửa và đối chiếu từng số với file nguồn. Phần dùng AI của các thành viên khác: xem bảng trong `docs/ai-usage.md`.
+- **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, chấm cột `pass` (chấm tay, 2 người), hay sửa kết quả các lượt đã chạy.
 
 ## File mẫu — điền ở bước nào
 
