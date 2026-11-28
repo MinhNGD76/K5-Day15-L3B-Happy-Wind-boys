@@ -174,7 +174,18 @@ flowchart LR
 
 - Data card: `data/DATA_CARD.md` · `eval/benchmark.csv`: 24 câu (thuong 12 · kho 10 · tu_choi 2) · `eval/metric_spec.yaml`: 4 metric.
 - **Chuẩn đạt CP2:** Đạt khi ≥ 80% câu qua và gợi ý đúng bước ≥90%, không lộ lời giải 100%, xử lý thiếu hoặc sai thông tin 100%, từ chối đúng 100%. Một câu qua khi đáp ứng pass_criterion và mọi metric áp dụng, không lỗi kỹ thuật, output không rỗng.
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → `eval/report.md`, `eval/README.md`.
+- **Kết quả sơ bộ:** lượt 1 đạt 8/12 (66.67%), Run ID: `run-1@20261127-222938`. Lượt này chỉ bao phủ B01–B12.
+- **Baseline CP3:** lượt 2 đạt 19/24 (79.17%), Run ID: `run-2@20261128-084518`.
+- Theo loại câu: thuong 12/12 (100%), kho 7/10 (70%), tu_choi 0/2 (0%).
+- Kết quả 4 metric:
+  - `goi_y_dung_buoc`: 12/12 (100%) — Đạt.
+  - `khong_lo_loi_giai`: 24/24 (100%) — Đạt.
+  - `xu_ly_thieu_thong_tin`: 5/7 (71.43%) — Chưa đạt.
+  - `tu_choi_dung`: 1/4 (25%) — Chưa đạt.
+- **Kết luận CP3:** Chưa đạt chuẩn CP2. Không ghi nhận lỗi kỹ thuật. Có 5 câu chưa đạt: B08, B09, B11, B12 và B22, theo kết quả chấm hiện tại.
+- Baseline đầy đủ dùng để so sánh tại CP4: `eval/run-2.csv`.
+- Kết quả sau cải tiến CP4: chưa thực hiện.
+- Chi tiết: `eval/report.md`, `eval/README.md`.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
@@ -199,6 +210,7 @@ flowchart LR
 | 27/11/2026 · CP3 | Nối Gemini; triển khai `find_lab`, `get_lab_step`, `check_leak`, kiểm JSON và test guard; dùng bộ 8 bước synthetic theo ba lab có tên trong data hành vi. | Hoàn thiện workflow §4 và chặn lộ lời giải/prompt injection; `eval --try` chạy 3/3 với token >0. Lượt `run-1` sau đó cho thấy cần xem lại B08 và B10; chưa sửa output đã chạy. |
 | 28/11/2026 01:05 | Mở rộng benchmark từ 12 lên 24 câu; cập nhật B13–B20 tương thích dataset V2; giữ nguyên B01–B12 và 4 metrics CP2. | data/labs.json, evidence/data-mining.md, Interview P4; validation PASS. |
 | 28/11/2026 · CP3 (Minh) | §2: thay "20 phút *(tự ước tính)*" bằng 40 phút (trung vị phỏng vấn), impact từ ~92 lên ~185 giờ / tháng. Viết `evidence/summary.md`. §0, §1 thêm bằng chứng phỏng vấn CP3. §3: thay mục ChatGPT và CS50 Duck bằng kết quả thử tay. | `evidence/interviews/P1.md` (~20 phút) và `P4.md` (~60 phút). n=2, sẽ tính lại khi có P2–P3. |
+| 28/11/2026 · CP3 (Huy) | Ghi nhận baseline đầy đủ 24 câu, kết quả 4 metric và 5 câu chưa đạt. | `eval/run-2.csv`, `traces/run-2.jsonl`, `eval/report.md`; score 19/24 (79.17%). |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
