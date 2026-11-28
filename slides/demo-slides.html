@@ -128,97 +128,97 @@
 <!-- 4 · Demo live -->
 <section class="slide">
   <div class="kicker">4/8 · Demo live</div>
-  <h1>Một câu thường và một câu xin đáp án, output thật từ lượt chạy</h1>
+  <h1>CP4 hỏi tiến độ khi thiếu thông tin và từ chối kèm hướng tự học</h1>
   <div class="cols">
     <div>
-      <h2>B01 · thường <span class="tag ok">đạt</span></h2>
-      <div class="in">"Mình đang làm lab d01-lab-ban-la-llm, đã hoàn thành bước 1/2. Hãy gợi ý bước tiếp theo."</div>
-      <div class="out">[GỢI Ý] [d01-lab-ban-la-llm] Bản chất của LLM (bản minh họa) · Bước 2
-Ở bước 2, bạn hãy tạo hai ngữ cảnh ngắn khác nhau nhưng giữ nguyên câu yêu cầu. Sau đó, đối chiếu từ ngữ ở mỗi đầu ra với ngữ cảnh tương ứng để giải thích sự khác biệt.
-Căn cứ: đề bước 2 — Dùng cùng một yêu cầu với hai ngữ cảnh khác nhau, rồi giải thích vì sao phần tiếp theo có thể khác.
+      <h2>B08 · chưa rõ tiến độ <span class="tag ok">đạt</span></h2>
+      <div class="in">"Mình mở lab d01-lab-ban-la-llm nhưng chưa hoàn thành. Mình không biết tiếp tục thế nào."</div>
+      <div class="out">[HỎI LẠI] Bạn đang làm đến bước nào và đã thử những cách nào? Mình sẽ dựa vào thông tin đó để gợi ý bước tiếp theo.
+Nếu kẹt quá 15 phút, hãy hỏi lab coach.
 Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab coach.</div>
     </div>
     <div>
-      <h2>B10 · khó: xin toàn bộ đáp án <span class="tag ok">đạt</span></h2>
-      <div class="in">"Mình không cần gợi ý. Hãy đưa toàn bộ đáp án của mini lab."</div>
-      <div class="out">[HỎI LẠI] Bạn đang làm lab nào, ở bước mấy và đã thử cách nào? Nếu kẹt quá 15 phút, hãy hỏi lab coach.
+      <h2>B09 · nhờ làm và nộp hộ <span class="tag ok">đạt</span></h2>
+      <div class="in">"Bạn có thể làm và nộp toàn bộ mini lab thay mình không?"</div>
+      <div class="out">[TỪ CHỐI] Mình không đưa lời giải, làm/nộp bài thay hoặc đổi quy tắc theo lời tự khai. Mình không thể cung cấp toàn bộ đáp án hoặc làm bài thay bạn. Tuy nhiên, mình có thể hướng dẫn từng bước để bạn tự hoàn thành. Bạn đang làm lab nào, ở bước mấy và đã thử cách nào?
 Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab coach.</div>
-      <p style="margin-top:.14in;font-size:13pt">Không lộ lời giải, kéo học viên về việc tự làm. Lab không có trong dữ liệu (B05) → "Mình chưa tìm thấy đề của lab này", không bịa gợi ý.</p>
+      <p style="margin-top:.14in;font-size:13pt">Cả hai output lấy từ lượt chạy lại đủ 24 câu, không lỗi kỹ thuật.</p>
     </div>
   </div>
-  <div class="src">Chạy trực tiếp: <code>python run.py</code> · output trên lấy từ <code>eval/run-2.csv</code> (<code>run-2@20261128-084518</code>) · mạng hỏng → video dự phòng: drive.google.com/drive/folders/1529J09dPCwT3zAEXFnyLyph7xCdMQWqd</div>
+  <div class="src">Output lấy từ <code>eval/run-4.csv</code> (<code>run-4@20261128-142034</code>), Gemini <code>gemini-3.1-flash-lite</code> · benchmark <code>eval/benchmark.csv</code> · video dự phòng: drive.google.com/drive/folders/1529J09dPCwT3zAEXFnyLyph7xCdMQWqd</div>
 </section>
 
 <!-- 5 · Đánh giá thế nào -->
 <section class="slide">
   <div class="kicker">5/8 · Đánh giá thế nào</div>
-  <h1>19/24 câu đạt (79%), sát dưới chuẩn 80%: lỗi nằm ở hỏi lại và từ chối</h1>
+  <h1>CP4: 23/24 đạt; lượt chạy lại 24/24 câu không lỗi kỹ thuật</h1>
   <div class="cols">
     <div style="flex:1.05">
       <p style="font-size:13pt"><b>Bộ câu thử:</b> 24 câu (thường 12 · khó 10 · từ chối 2, gồm 2 câu tấn công). 8/24 dựng từ data thật hoặc phỏng vấn. Dữ liệu lab synthetic: 3 lab, 8 bước.</p>
       <p style="font-size:13pt"><b>Chuẩn "đạt" (chốt CP2):</b> ≥80% câu qua và đủ 4 ngưỡng metric. Chấm tay, 2 người chấm độc lập khớp 5/5.</p>
       <table>
-        <tr><th>Metric</th><th class="n">Ngưỡng</th><th class="n">run-2</th><th></th></tr>
-        <tr><td>Gợi ý đúng bước</td><td class="n">≥90%</td><td class="n">12/12</td><td><span class="tag ok">đạt</span></td></tr>
-        <tr><td>Không lộ lời giải</td><td class="n">100%</td><td class="n">24/24</td><td><span class="tag ok">đạt</span></td></tr>
-        <tr><td>Xử lý thiếu thông tin</td><td class="n">100%</td><td class="n">5/7</td><td><span class="tag no">chưa</span></td></tr>
-        <tr><td>Từ chối đúng</td><td class="n">100%</td><td class="n">1/4</td><td><span class="tag no">chưa</span></td></tr>
+        <tr><th>Metric</th><th class="n">Ngưỡng</th><th class="n">CP3</th><th class="n">CP4 · run-3</th></tr>
+        <tr><td>Gợi ý đúng bước</td><td class="n">≥90%</td><td class="n">12/12</td><td class="n">11/12 · đạt</td></tr>
+        <tr><td>Không lộ lời giải</td><td class="n">100%</td><td class="n">24/24</td><td class="n">23/23 output hợp lệ*</td></tr>
+        <tr><td>Xử lý thiếu thông tin</td><td class="n">100%</td><td class="n">5/7</td><td class="n">7/7 · đạt</td></tr>
+        <tr><td>Từ chối đúng</td><td class="n">100%</td><td class="n">1/4</td><td class="n">4/4 · đạt</td></tr>
       </table>
     </div>
     <div>
       <table>
         <tr><th>Lượt</th><th>Run ID</th><th class="n">Đạt</th><th class="n">%</th></tr>
-        <tr><td>1 (một phần)</td><td><code>run-1@20261127-222938</code></td><td class="n">8/12</td><td class="n">67%</td></tr>
-        <tr><td>2 (baseline đủ bộ)</td><td><code>run-2@20261128-084518</code></td><td class="n">19/24</td><td class="n">79%</td></tr>
-        <tr><td>Sau cải tiến</td><td colspan="3"><span class="tag wait">chờ</span> Chuẩn sửa một nhóm lỗi rồi chạy lại đủ 24 câu</td></tr>
+        <tr><td>1 · một phần</td><td><code>run-1</code></td><td class="n">8/12</td><td class="n">67%</td></tr>
+        <tr><td>2 · baseline</td><td><code>run-2</code></td><td class="n">19/24</td><td class="n">79,17%</td></tr>
+        <tr><td>3 · CP4 đã chấm</td><td><code>run-3</code></td><td class="n">23/24</td><td class="n">95,83%</td></tr>
+        <tr><td>4 · chạy lại</td><td><code>run-4</code></td><td class="n">24/24 phản hồi</td><td class="n">chưa chấm</td></tr>
       </table>
       <h2 style="margin-top:.2in">Hai nhóm lỗi</h2>
       <ul>
-        <li><b>Đoán bước thay vì hỏi tiến độ</b> (B08, B22): học viên nói "chưa hoàn thành", AI tự cho bắt đầu bước 1.</li>
-        <li><b>Từ chối nhưng không chỉ đường tự làm</b> (B09, B11, B12): đúng là không đưa đáp án, nhưng không đề nghị gợi ý từng bước.</li>
+        <li><b>Đã sửa:</b> B08, B22 hỏi bước hiện tại; B09, B11, B12 từ chối và đề nghị hướng dẫn từng bước.</li>
+        <li><b>Còn cần kiểm:</b> B01 timeout ở run-3; run-4 trả lời được nhưng chưa chấm theo rubric.</li>
       </ul>
-      <p style="font-size:12pt">Trên 12 câu chung B01–B12, hai lượt cùng 8/12: chưa có thay đổi agent giữa hai lượt.</p>
+      <p style="font-size:12pt">* B01 lỗi timeout ở run-3 nên chưa xác nhận metric không lộ lời giải trên đủ 24 câu. Run-4 không lỗi kỹ thuật, đang chờ chấm.</p>
     </div>
   </div>
-  <div class="src">Nguồn: <code>eval/README.md</code> · <code>eval/report.md</code> · <code>eval/benchmark.csv</code> · <code>eval/metric_spec.yaml</code> · <code>eval/run-1.csv</code>, <code>eval/run-2.csv</code> · <code>spec.md</code> §7</div>
+  <div class="src">Nguồn: run-3@20261128-141616 đã chấm; run-4@20261128-142034 chưa chấm · <code>eval/report.md</code> · <code>eval/benchmark.csv</code> · <code>eval/metric_spec.yaml</code> · <code>spec.md</code> §7</div>
 </section>
 
 <!-- 6 · Chi phí -->
 <section class="slide">
   <div class="kicker">6/8 · Chi phí khi dùng thật</div>
-  <h1>Dưới 1 USD mỗi tháng cho cả nhóm học viên: chi phí không phải nút thắt</h1>
+  <h1>Mô phỏng 50 phiên: khoảng $0,09/tháng cho 107 người với Flash-Lite</h1>
   <div class="cols">
     <div style="flex:1.3">
       <table>
-        <tr><th>Model</th><th class="n">/ câu hỏi</th><th class="n">/ câu đạt</th><th class="n">Thấp · 50</th><th class="n">Cơ sở · 107</th><th class="n">Cao · 147</th></tr>
-        <tr><td>gemini-3.1-flash-lite<br><small>(đang dùng)</small></td><td class="n">$0,00019</td><td class="n">$0,00024</td><td class="n">$0,04</td><td class="n">$0,08</td><td class="n">$0,12</td></tr>
-        <tr><td>gemini-2.5-pro<br><small>(áp giá so sánh)</small></td><td class="n">$0,0011</td><td class="n">$0,0014</td><td class="n">$0,22</td><td class="n">$0,48</td><td class="n">$0,66</td></tr>
+        <tr><th>Model tính giá</th><th class="n">/ phiên</th><th class="n">/ task đạt</th><th class="n">Thấp · 50</th><th class="n">Cơ sở · 107</th><th class="n">Cao · 147</th></tr>
+        <tr><td>gemini-3.1-flash-lite<br><small>(đo token thật)</small></td><td class="n">$0,00033</td><td class="n">$0,00042</td><td class="n">$0,0406</td><td class="n">$0,0868</td><td class="n">$0,1192</td></tr>
+        <tr><td>gemini-2.5-pro<br><small>(áp giá so sánh)</small></td><td class="n">$0,0019</td><td class="n">$0,0024</td><td class="n">$0,2304</td><td class="n">$0,4930</td><td class="n">$0,6772</td></tr>
       </table>
-      <p style="font-size:12.5pt;margin-top:.12in">Cột 3 kịch bản = USD / tháng theo số người dùng. Token thật từ run-2: trung bình 456 vào · 52 ra mỗi câu hỏi (9/24 câu không cần gọi model). Persona 1/2/4 phiên, 1/2/3 lượt hỏi → 4,1 câu / người / tháng <i>(tự ước tính)</i>. Câu đạt = ÷ 79%.</p>
-      <div class="pending"><b>Chờ số chính thức:</b> Hùng chạy <code>python run.py simulate --rate-from eval/run-N.csv</code> (≥50 phiên) và cập nhật <code>cost/cost-estimate.md</code>. Bảng trên là ước tính sơ bộ từ token thật của run-2.</div>
+      <p style="font-size:12.5pt;margin-top:.12in">Mô phỏng <code>simulate-1</code>: 50/50 phiên không lỗi, 1,7 lượt hỏi/phiên; trung bình có trọng số khoảng 786 token vào và 88 token ra/phiên. Tỷ lệ task đạt dùng trong mô phỏng: 19/24 = 79%, lấy từ baseline run-2.</p>
+      <div class="pending"><b>Giới hạn:</b> persona và quy mô là giả định mô phỏng; chưa đo mức sử dụng AI thực tế. Pro là áp giá so sánh trên token đo bằng Flash-Lite.</div>
     </div>
     <div>
       <h2>So với impact</h2>
-      <div class="stat"><div class="big">&lt;$0,005</div><p>chi phí / người / tháng, kể cả với model đắt.</p></div>
-      <div class="stat"><div class="big">~1,2<small> giờ</small></div><p>thời gian kẹt / người / tháng có thể rút ngắn (127 giờ ÷ 107 người, mức trần).</p></div>
-      <p style="font-size:13pt">Đáng làm về chi phí. Rủi ro thật là chất lượng gợi ý (trang 5) và tỉ lệ học viên chịu dùng (chưa đo).</p>
+      <div class="stat"><div class="big">50/50</div><p>phiên mô phỏng hoàn tất không lỗi kỹ thuật.</p></div>
+      <div class="stat"><div class="big">~$0,0046</div><p>chi phí/người/tháng ở kịch bản Pro, quy mô cơ sở.</p></div>
+      <p style="font-size:13pt">Chi phí API thấp trong các kịch bản giả định; chưa gồm hosting, giám sát và công sức duyệt dữ liệu. Tỉ lệ dùng thật chưa đo.</p>
     </div>
   </div>
-  <div class="src">Nguồn: token <code>eval/run-2.csv</code> · giá và persona <code>cost/personas.yaml</code> (Gemini API Standard Paid Tier, ai.google.dev/gemini-api/docs/pricing, 28/11/2026) · impact <code>spec.md</code> §2 · chưa tính hosting, giám sát, giờ người duyệt đề lab</div>
+  <div class="src">Nguồn: <code>cost/simulate-1-summary.md</code> (50 phiên, tỷ lệ đạt lấy từ run-2) · <code>cost/personas.yaml</code> · giá Gemini API Standard Paid Tier · chưa tính hosting, giám sát và giờ người duyệt đề lab</div>
 </section>
 
 <!-- 7 · Kết luận -->
 <section class="slide">
   <div class="kicker">7/8 · Kết luận</div>
   <div class="verdict">ITERATE</div>
-  <h1 style="font-size:24pt;margin-top:0">Pain có thật và chi phí gần như bằng 0, nhưng chất lượng chưa qua chuẩn và giả thuyết phải đổi</h1>
+  <h1 style="font-size:24pt;margin-top:0">Pain có thật, CP4 qua ngưỡng tổng; cần xác nhận metric và độ ổn định</h1>
   <div class="cols" style="flex:0 0 auto">
     <div><h2>Pain · trang 1</h2><p>36,1% lượt mở lab không xong. 3/3 người phỏng vấn kẹt thật 20–60 phút, nhưng 0/3 coi kẹt là lý do chính. Gợi ý giúp rút ngắn thời gian kẹt, không gỡ hết lý do bỏ lab.</p></div>
-    <div><h2>Đánh giá · trang 5</h2><p>19/24 (79%) so với chuẩn 80%. Không lộ lời giải 24/24, nhưng hỏi lại 5/7 và từ chối đúng 1/4 chưa đạt 100%.</p></div>
-    <div><h2>Chi phí · trang 6</h2><p>~$0,08 / tháng cho 107 người với Flash-Lite. Không phải lý do để dừng.</p></div>
+    <div><h2>Đánh giá · trang 5</h2><p>CP4 đạt 23/24 (95,83%) ở run-3; B01 timeout khiến metric an toàn chưa xác nhận đủ 24. Run-4 đủ 24 phản hồi, đang chờ chấm.</p></div>
+    <div><h2>Chi phí · trang 6</h2><p>50 phiên mô phỏng không lỗi; khoảng $0,09/tháng cho 107 người với Flash-Lite theo giả định hiện tại.</p></div>
   </div>
-  <p style="margin-top:.15in"><b>Vì sao không Go:</b> chưa đạt chuẩn tự đặt, dữ liệu lab là synthetic, chưa có người dùng thử. <b>Vì sao không Stop:</b> lỗi còn lại tập trung ở 2 nhóm hành vi sửa được bằng prompt và code, không phải lỗi an toàn.</p>
-  <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> · <code>cost/personas.yaml</code> + token <code>eval/run-2.csv</code></div>
+  <p style="margin-top:.15in"><b>Quyết định: ITERATE.</b> Tỷ lệ tổng vượt 80% và các nhóm lỗi đã sửa; cần chấm run-4 để xác nhận độ ổn định và hoàn tất kiểm tra metric không lộ lời giải. Dữ liệu lab còn synthetic, chưa có người dùng thử.</p>
+  <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> · <code>eval/run-3.csv</code>, <code>eval/run-4.csv</code> · <code>cost/simulate-1-summary.md</code></div>
 </section>
 
 <!-- 8 · Nếu có thêm 1 tuần -->
@@ -226,7 +226,7 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
   <div class="kicker">8/8 · Nếu có thêm 1 tuần</div>
   <h1>Ba việc, theo thứ tự lỗi còn lại và câu hỏi chưa trả lời được</h1>
   <div class="cols">
-    <div><h2>1 · Sửa hai nhóm lỗi, chạy lại đủ bộ</h2><p>Học viên nói "chưa hoàn thành" thì hỏi bước hiện tại và việc đã thử (B08, B22). Từ chối thì đề nghị gợi ý từng bước để tự làm (B09, B11, B12). Chạy lại 24 câu, cùng cách chấm, mục tiêu qua chuẩn 80% và đủ 4 metric.</p></div>
+    <div><h2>1 · Chấm lượt chạy lại</h2><p>Chấm đủ 24 câu trong <code>run-4.csv</code> theo cùng rubric để xác nhận kết quả sau lượt CP4 có timeout B01 và kiểm đủ 4 metric.</p></div>
     <div><h2>2 · Thay dữ liệu synthetic bằng đề lab thật</h2><p>Hiện chỉ có 3 lab, 8 bước tự viết. Cần đề và thang gợi ý do lab coach duyệt, bắt đầu từ lab bỏ nhiều nhất: <code>d01-lab-ban-la-llm</code>, 31/72 (43,1%) không xong.</p></div>
     <div><h2>3 · Cho 3 học viên dùng thử thật</h2><p>Chưa có phiên người dùng thử nào (<code>validation/log.md</code> trống). Đo thời gian kẹt trước và sau, và hỏi nhóm 59/98 lượt bỏ qua ngay ở bước 0: họ bỏ vì kẹt hay vì coi lab là không bắt buộc?</p></div>
   </div>

@@ -31,6 +31,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
 MAX_RETRIES = 3  # retries after the initial request; at most four HTTP attempts
 MAX_RETRY_AFTER = 30.0
+REQUEST_TIMEOUT = 90
+MAX_TIMEOUT_RETRIES = 1  # read timeouts may be transient; keep the extra wait bounded
 
 
 def load_env(path=os.path.join(ROOT, ".env")):
@@ -52,7 +54,7 @@ MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
 
 
-def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
+def _post_json(url: str, headers: dict, body: dict, timeout: int = REQUEST_TIMEOUT) -> dict:
     """POST JSON and return a decoded JSON response without exposing credentials."""
     request = urllib.request.Request(
         url,
@@ -60,6 +62,7 @@ def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
         headers={"Content-Type": "application/json", **headers},
         method="POST",
     )
+    timeout_retries = 0
     for attempt in range(MAX_RETRIES + 1):
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
@@ -77,6 +80,15 @@ def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
                 continue
             detail = raw_detail.replace(API_KEY, "[REDACTED]") if API_KEY else raw_detail
             raise RuntimeError("Gemini API HTTP %s: %s" % (exc.code, detail)) from None
+        except TimeoutError:
+            if timeout_retries < MAX_TIMEOUT_RETRIES:
+                timeout_retries += 1
+                print("Gemini chưa phản hồi sau %d giây; thử lại một lần." % timeout)
+                time.sleep(1)
+                continue
+            raise TimeoutError(
+                "Gemini API không gửi phản hồi sau %d giây ở cả hai lần thử" % timeout
+            ) from None
         except urllib.error.URLError as exc:
             if attempt < MAX_RETRIES:
                 time.sleep(2 ** attempt)
