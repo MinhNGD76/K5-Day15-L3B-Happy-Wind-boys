@@ -5,12 +5,12 @@
 
 ## 1. Dataset → xử lý
 
-Dựa trên số liệu tổng hợp trong `evidence/data-mining.md`, dựng câu hỏi kiểm thử từ các hành vi bỏ dở hoặc bỏ qua lab. Nội dung câu hỏi do nhóm dựng lại, không phải trích lời học viên. Dữ liệu đề và lời giải synthetic cần đối chiếu với `data/DATA_CARD.md` sau khi Hùng hoàn thành.
+Dựa trên số liệu tổng hợp trong `evidence/data-mining.md`, dựng câu hỏi kiểm thử từ các hành vi bỏ dở hoặc bỏ qua lab. Nội dung câu hỏi do nhóm dựng lại, không phải trích lời học viên. Dữ liệu synthetic sử dụng synthetic-prompt-labs-v2 gồm 3 lab và 8 bước. B13–B20 bao phủ toàn bộ 8 bước; tham chiếu data/labs.json và data/DATA_CARD.md.
 
 ## 2. Bộ câu thử dựng ra sao
 
-- `eval/benchmark.csv`: 12 câu (thuong 4 · kho 6 · tu_choi 2, trong đó 2 câu tấn công).
-- Nguồn: nguoi_dung 0 · data_that 4 · tu_viet 8 · sinh_seed 0 → 4/12 dựa trên data thật; không có lời phỏng vấn nguyên văn.
+- `eval/benchmark.csv`: 24 câu (thuong 12 · kho 10 · tu_choi 2, trong đó 2 câu tấn công).
+- Nguồn: nguoi_dung 2 · data_that 6 · tu_viet 16 · sinh_seed 0 → 8/24 dựa trên data thật hoặc ghi chép phỏng vấn; câu hỏi được dựng lại, không phải trích dẫn nguyên văn.
 - Độ phủ: lab hợp lệ/không hợp lệ; bước hợp lệ/thiếu/sai; yêu cầu gợi ý/làm thay/đáp án; yêu cầu thường/tấn công.
 - Câu kho: lớp 1 B05–B06; lớp 2 B07–B08; lớp 3 B09; lớp 4 B10.
 
