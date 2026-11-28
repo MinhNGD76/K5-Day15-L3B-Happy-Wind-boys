@@ -190,10 +190,10 @@ flowchart LR
 - Cả 5 lỗi hành vi tại CP3 đã được xử lý. B01 gặp TimeoutError. Chưa xác nhận đạt toàn bộ acceptance criteria do thiếu output B01.
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-2.csv` (50 phiên, 46 chạy xong, 4 lỗi timeout; agent bản CP4; tỉ lệ đạt 23/24 từ `run-3`).
+- Chi phí / task thành công: **$0,00031** (gemini-3.1-flash-lite, token đo thật) · **$0,0017** (gemini-2.5-pro, áp giá chéo trên token của Flash-Lite).
+- Chi phí / tháng theo số người dùng 50 / 107 / 147 (Flash-Lite): thấp **$0,036** · cơ sở **$0,076** · cao **$0,104**. Với Pro: $0,20 · $0,43 · $0,59. Cả lớp L3 hơn 700 người: ~$0,50 *(tự ước tính, tuyến tính)*. Chi tiết `cost/cost-estimate.md`.
+- So với impact / người / tháng (§2): **đáng làm**. Chi phí dưới $0,001 / người / tháng, trong khi thời gian kẹt có thể rút ngắn tới ~1,2 giờ / người / tháng (127 giờ ÷ 107 người, mức trần). Chi phí model không phải nút thắt. Cái cần giải là độ ổn định (8% phiên bị timeout) và việc gợi ý có thật sự rút ngắn thời gian kẹt hay không (chưa đo với người dùng). Chưa tính hosting và giờ công lab coach duyệt đề.
 
 ## §9. Rủi ro & an toàn
 - **Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:**
@@ -241,4 +241,5 @@ flowchart LR
 
 | Thời điểm | Đổi gì | Vì sao |
 |---|---|---|
-|  |  |  |
+| 28/11/2026 14:36–14:55 (Hùng, Claude Code chạy hộ) | Chạy `simulate-2` (50 phiên, agent CP4, tỉ lệ đạt run-3) thay cho `simulate-1` (agent CP3, tỉ lệ run-2). Viết lại `cost/cost-estimate.md`, điền §8. `simulate-1` giữ nguyên, không xoá. | Agent đã đổi sau `simulate-1`. Lượt sau cải tiến đã chấm là `run-3`. 4/50 phiên timeout, ghi ở `cost-estimate.md` mục 6. |
+| 28/11/2026 14:40–14:55 (Minh) | Slide 5, 7, 8 cập nhật theo `run-3`; slide 6 thay ước tính sơ bộ bằng `simulate-2`; xuất lại `demo-slides.pdf`. §9: hai lỗi B08/B22 và B09/B11/B12 đã sửa ở CP4. Thêm `reflection/nguyen-dinh-minh.md`. | `eval/report.md` mục 5 (`run-3` push lúc ~14:30), `cost/simulate-2-summary.md`. |

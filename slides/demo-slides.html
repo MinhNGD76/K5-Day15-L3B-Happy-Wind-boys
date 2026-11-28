@@ -191,12 +191,12 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
   <div class="cols">
     <div style="flex:1.3">
       <table>
-        <tr><th>Model</th><th class="n">/ câu hỏi</th><th class="n">/ câu đạt</th><th class="n">Thấp · 50</th><th class="n">Cơ sở · 107</th><th class="n">Cao · 147</th></tr>
-        <tr><td>gemini-3.1-flash-lite<br><small>(đang dùng)</small></td><td class="n">$0,00019</td><td class="n">$0,00024</td><td class="n">$0,04</td><td class="n">$0,08</td><td class="n">$0,12</td></tr>
-        <tr><td>gemini-2.5-pro<br><small>(áp giá so sánh)</small></td><td class="n">$0,0011</td><td class="n">$0,0014</td><td class="n">$0,22</td><td class="n">$0,48</td><td class="n">$0,66</td></tr>
+        <tr><th>Model</th><th class="n">/ phiên</th><th class="n">/ task thành công</th><th class="n">Thấp · 50</th><th class="n">Cơ sở · 107</th><th class="n">Cao · 147</th></tr>
+        <tr><td>gemini-3.1-flash-lite<br><small>(đang dùng, token đo thật)</small></td><td class="n">$0,00030</td><td class="n">$0,00031</td><td class="n">$0,036</td><td class="n">$0,076</td><td class="n">$0,104</td></tr>
+        <tr><td>gemini-2.5-pro<br><small>(áp giá chéo)</small></td><td class="n">$0,0017</td><td class="n">$0,0017</td><td class="n">$0,20</td><td class="n">$0,43</td><td class="n">$0,59</td></tr>
       </table>
-      <p style="font-size:12.5pt;margin-top:.12in">Cột 3 kịch bản = USD / tháng theo số người dùng. Token thật từ run-2: trung bình 456 vào · 52 ra mỗi câu hỏi (9/24 câu không cần gọi model). Persona 1/2/4 phiên, 1/2/3 lượt hỏi → 4,1 câu / người / tháng <i>(tự ước tính)</i>. Câu đạt = ÷ 79%.</p>
-      <div class="pending"><b>Chờ số chính thức:</b> Hùng chạy <code>python run.py simulate --rate-from eval/run-N.csv</code> (≥50 phiên) và cập nhật <code>cost/cost-estimate.md</code>. Bảng trên là ước tính sơ bộ từ token thật của run-2.</div>
+      <p style="font-size:12.5pt;margin-top:.12in">3 cột cuối = USD / tháng theo số người dùng. Mô phỏng 50 phiên chạy thật qua bản chạy thử (agent CP4). Persona 1/2/4 phiên, 1/2/3 lượt hỏi <i>(tự ước tính)</i>. Task thành công = ÷ tỉ lệ đạt 96% (run-3). Cả lớp L3 hơn 700 người: ~$0,50 / tháng <i>(tự ước tính, tuyến tính)</i>.</p>
+      <div class="pending"><b>Rủi ro thật là độ ổn định:</b> 4/50 phiên (8%) bị timeout khi gọi model, cùng loại lỗi làm B01 trượt ở run-3. Cần thêm thử lại trước khi pilot.</div>
     </div>
     <div>
       <h2>So với impact</h2>
@@ -205,7 +205,7 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
       <p style="font-size:13pt">Đáng làm về chi phí. Rủi ro thật là chất lượng gợi ý (trang 5) và tỉ lệ học viên chịu dùng (chưa đo).</p>
     </div>
   </div>
-  <div class="src">Nguồn: token <code>eval/run-2.csv</code> · giá và persona <code>cost/personas.yaml</code> (Gemini API Standard Paid Tier, ai.google.dev/gemini-api/docs/pricing, 28/11/2026) · impact <code>spec.md</code> §2 · chưa tính hosting, giám sát, giờ người duyệt đề lab</div>
+  <div class="src">Nguồn: <code>cost/simulate-2-summary.md</code> (<code>simulate-2@20261128-143612</code>), <code>cost/cost-estimate.md</code> · giá và persona <code>cost/personas.yaml</code> (Gemini API Standard Paid Tier, ai.google.dev/gemini-api/docs/pricing, 28/11/2026) · impact <code>spec.md</code> §2 · chưa tính hosting, giám sát, giờ người duyệt đề lab</div>
 </section>
 
 <!-- 7 · Kết luận -->
@@ -219,7 +219,7 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
     <div><h2>Chi phí · trang 6</h2><p>Dưới $0,10 / tháng cho 107 người với Flash-Lite. Không phải lý do để dừng.</p></div>
   </div>
   <p style="margin-top:.15in"><b>Vì sao chưa Go:</b> 24 câu thử chạy trên 3 lab synthetic, chưa có đề do lab coach duyệt, chưa có học viên nào dùng thử, và chưa xác nhận "không lộ lời giải" trên đủ 24 câu. <b>Vì sao không Stop:</b> cả hai nhóm lỗi hành vi đã sửa được bằng một lần cải tiến, chi phí không đáng kể. Bước tiếp theo là pilot nhỏ với đề thật.</p>
-  <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> · <code>cost/personas.yaml</code> + token <code>eval/run-2.csv</code></div>
+  <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> mục 5 · <code>cost/simulate-2-summary.md</code></div>
 </section>
 
 <!-- 8 · Nếu có thêm 1 tuần -->

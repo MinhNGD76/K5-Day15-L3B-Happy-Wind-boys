@@ -16,7 +16,8 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 | Viết câu thử (benchmark) | __ (Huy tự điền) | __ | Mỗi câu thử có `source`; câu thử AI viết được ghi rõ | Huy |
 | Sinh data `synthetic` (nếu có) | __ (Chuẩn / Hùng tự điền) | `data/labs.json`: 3 lab, 8 bước | Seed __ · kiểm tay __ dòng | Hùng |
 | Chấm cột `pass` bằng LLM (nếu có) | Không dùng | — | Chấm tay toàn bộ. Huy và Hùng chấm độc lập 5 câu, khớp 5/5 (`eval/README.md` mục 3) | Huy, Hùng |
-| Slide, văn bản | Claude Code (Minh) | Soạn nháp canvas, `spec.md` §0–§4 §6, `evidence/summary.md`, `docs/phan-cong.md`, slide `slides/demo-slides.html` → `demo-slides.pdf`, mục này | Minh đọc lại, đối chiếu từng số trên slide với file nguồn ghi ở chân trang. Chi phí trên slide 6 là ước tính sơ bộ từ token thật `eval/run-2.csv`, chờ số chính thức của Hùng | Minh |
+| Mô phỏng chi phí | Claude Code (Minh chạy hộ Hùng) | Chạy `python run.py simulate --rate-from eval/run-3.csv` (50 phiên, token đo bằng Gemini thật), viết lại `cost/cost-estimate.md`, điền `spec.md` §8 | Số trong bảng chép nguyên từ `cost/simulate-2-summary.md` do khung sinh ra. Hùng cần đọc lại và tự giải thích được | Hùng |
+| Slide, văn bản | Claude Code (Minh) | Soạn nháp canvas, `spec.md` §0–§4 §6, `evidence/summary.md`, `docs/phan-cong.md`, slide `slides/demo-slides.html` → `demo-slides.pdf`, mục này | Minh đọc lại, đối chiếu từng số trên slide với file nguồn ghi ở chân trang. Chi phí trên slide 6 lấy từ `cost/simulate-2-summary.md` | Minh |
 | Thử tay giải pháp tương tự (§3) | ChatGPT, CS50 Duck | Là đối tượng được thử, không phải công cụ làm bài | Minh dán nguyên văn câu trả lời vào `evidence/thu-tay-*.md` | Minh |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy (`eval/run-*.csv`, `cost/simulate-*.csv`, `traces/`).
