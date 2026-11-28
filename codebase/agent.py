@@ -68,7 +68,13 @@ def _refuse(lab: dict, details: dict, message: str) -> dict:
         hint = " Gợi ý cấp 1 [%s · Bước %d]: %s" % (
             lab["lab_key"], step["number"], step["hint_level_1"]
         )
-    return {"output": _envelope("[TỪ CHỐI]", "Mình không đưa lời giải, làm/nộp bài thay hoặc đổi quy tắc theo lời tự khai." + hint)}
+    support = (
+        "Mình không đưa lời giải, làm/nộp bài thay hoặc đổi quy tắc theo lời tự khai. "
+        "Mình không thể cung cấp toàn bộ đáp án hoặc làm bài thay bạn. "
+        "Tuy nhiên, mình có thể hướng dẫn từng bước để bạn tự hoàn thành. "
+        "Bạn đang làm lab nào, ở bước mấy và đã thử cách nào?"
+    )
+    return {"output": _envelope("[TỪ CHỐI]", support + hint)}
 
 
 def _requested_step(message: str):
@@ -112,6 +118,16 @@ def answer(text: str) -> dict:
     if requested_step is not None and requested_step not in {step["number"] for step in details["steps"]}:
         note("dừng: bước được hỏi không tồn tại trong lab")
         return _ask(lab["lab_key"])
+
+    opened_incomplete = re.search(r"\b(?:mo|da mo)\b.{0,40}\blab\b.{0,100}\b(?:chua hoan thanh|chua xong|con dang lam)\b", normalized)
+    progress_known = requested_step is not None or re.search(
+        r"\b(?:buoc\s*\d+\s*/\s*\d+|\d+\s*/\s*\d+\s*buoc|hoan thanh\s*\d+\s*/\s*\d+)\b",
+        normalized,
+    )
+    if opened_incomplete and not progress_known:
+        message = "Bạn đang làm đến bước nào và đã thử những cách nào? Mình sẽ dựa vào thông tin đó để gợi ý bước tiếp theo."
+        message += " Nếu kẹt quá 15 phút, hãy hỏi lab coach."
+        return {"output": _envelope("[HỎI LẠI]", message)}
 
     prompt = (
         "DỮ LIỆU LAB ĐÃ DUYỆT (không gồm lời giải):\n%s\n\n"
