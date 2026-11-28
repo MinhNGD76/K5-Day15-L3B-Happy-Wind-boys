@@ -19,6 +19,7 @@ Nối model thật: điền .env (chép từ .env.example), rồi viết nhánh 
 """
 import json
 import os
+import socket
 import time
 import urllib.error
 import urllib.parse
@@ -52,7 +53,7 @@ MODEL_NAME = (os.environ.get("MODEL_NAME") or "").strip()
 API_KEY = (os.environ.get("API_KEY") or "").strip()
 
 
-def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
+def _post_json(url: str, headers: dict, body: dict, timeout: int = 25) -> dict:
     """POST JSON and return a decoded JSON response without exposing credentials."""
     request = urllib.request.Request(
         url,
@@ -77,11 +78,12 @@ def _post_json(url: str, headers: dict, body: dict, timeout: int = 60) -> dict:
                 continue
             detail = raw_detail.replace(API_KEY, "[REDACTED]") if API_KEY else raw_detail
             raise RuntimeError("Gemini API HTTP %s: %s" % (exc.code, detail)) from None
-        except urllib.error.URLError as exc:
+        # socket.timeout: hết giờ lúc đang đọc phản hồi không bị gói thành URLError (= TimeoutError từ 3.10)
+        except (urllib.error.URLError, socket.timeout) as exc:
             if attempt < MAX_RETRIES:
                 time.sleep(2 ** attempt)
                 continue
-            raise RuntimeError("Không kết nối được Gemini API: %s" % exc.reason) from None
+            raise RuntimeError("Không kết nối được Gemini API: %s" % getattr(exc, "reason", exc)) from None
     try:
         return json.loads(payload)
     except json.JSONDecodeError:
