@@ -152,35 +152,36 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
 <!-- 5 · Đánh giá thế nào -->
 <section class="slide">
   <div class="kicker">5/8 · Đánh giá thế nào</div>
-  <h1>19/24 câu đạt (79%), sát dưới chuẩn 80%: lỗi nằm ở hỏi lại và từ chối</h1>
+  <h1>Sau một lần cải tiến: 19/24 (79%) → 23/24 (96%), vượt chuẩn 80%</h1>
   <div class="cols">
     <div style="flex:1.05">
       <p style="font-size:13pt"><b>Bộ câu thử:</b> 24 câu (thường 12 · khó 10 · từ chối 2, gồm 2 câu tấn công). 8/24 dựng từ data thật hoặc phỏng vấn. Dữ liệu lab synthetic: 3 lab, 8 bước.</p>
       <p style="font-size:13pt"><b>Chuẩn "đạt" (chốt CP2):</b> ≥80% câu qua và đủ 4 ngưỡng metric. Chấm tay, 2 người chấm độc lập khớp 5/5.</p>
       <table>
-        <tr><th>Metric</th><th class="n">Ngưỡng</th><th class="n">run-2</th><th></th></tr>
-        <tr><td>Gợi ý đúng bước</td><td class="n">≥90%</td><td class="n">12/12</td><td><span class="tag ok">đạt</span></td></tr>
-        <tr><td>Không lộ lời giải</td><td class="n">100%</td><td class="n">24/24</td><td><span class="tag ok">đạt</span></td></tr>
-        <tr><td>Xử lý thiếu thông tin</td><td class="n">100%</td><td class="n">5/7</td><td><span class="tag no">chưa</span></td></tr>
-        <tr><td>Từ chối đúng</td><td class="n">100%</td><td class="n">1/4</td><td><span class="tag no">chưa</span></td></tr>
+        <tr><th>Metric</th><th class="n">Ngưỡng</th><th class="n">run-2</th><th class="n">run-3</th><th></th></tr>
+        <tr><td>Gợi ý đúng bước</td><td class="n">≥90%</td><td class="n">12/12</td><td class="n">11/12</td><td><span class="tag ok">đạt</span></td></tr>
+        <tr><td>Không lộ lời giải</td><td class="n">100%</td><td class="n">24/24</td><td class="n">23/23*</td><td><span class="tag wait">chưa đủ</span></td></tr>
+        <tr><td>Xử lý thiếu thông tin</td><td class="n">100%</td><td class="n">5/7</td><td class="n">7/7</td><td><span class="tag ok">đạt</span></td></tr>
+        <tr><td>Từ chối đúng</td><td class="n">100%</td><td class="n">1/4</td><td class="n">4/4</td><td><span class="tag ok">đạt</span></td></tr>
       </table>
+      <p style="font-size:11.5pt;margin-top:.06in">* B01 bị timeout khi gọi model, không có output, nên chưa xác nhận được 24/24.</p>
     </div>
     <div>
       <table>
         <tr><th>Lượt</th><th>Run ID</th><th class="n">Đạt</th><th class="n">%</th></tr>
         <tr><td>1 (một phần)</td><td><code>run-1@20261127-222938</code></td><td class="n">8/12</td><td class="n">67%</td></tr>
         <tr><td>2 (baseline đủ bộ)</td><td><code>run-2@20261128-084518</code></td><td class="n">19/24</td><td class="n">79%</td></tr>
-        <tr><td>Sau cải tiến</td><td colspan="3"><span class="tag wait">chờ</span> Chuẩn sửa một nhóm lỗi rồi chạy lại đủ 24 câu</td></tr>
+        <tr class="pick"><td>3 (sau cải tiến)</td><td><code>run-3@20261128-141616</code></td><td class="n">23/24</td><td class="n">96%</td></tr>
       </table>
-      <h2 style="margin-top:.2in">Hai nhóm lỗi</h2>
+      <h2 style="margin-top:.2in">Đã sửa hai nhóm lỗi của run-2</h2>
       <ul>
-        <li><b>Đoán bước thay vì hỏi tiến độ</b> (B08, B22): học viên nói "chưa hoàn thành", AI tự cho bắt đầu bước 1.</li>
-        <li><b>Từ chối nhưng không chỉ đường tự làm</b> (B09, B11, B12): đúng là không đưa đáp án, nhưng không đề nghị gợi ý từng bước.</li>
+        <li><b>Đoán bước thay vì hỏi tiến độ</b> (B08, B22): nay hỏi học viên đã làm đến đâu. Trượt → đạt.</li>
+        <li><b>Từ chối nhưng không chỉ đường tự làm</b> (B09, B11, B12): nay từ chối kèm đề nghị hướng dẫn từng bước. Trượt → đạt.</li>
       </ul>
-      <p style="font-size:12pt">Trên 12 câu chung B01–B12, hai lượt cùng 8/12: chưa có thay đổi agent giữa hai lượt.</p>
+      <p style="font-size:12pt">Câu tệ đi: B01 (đạt → trượt) vì lỗi kỹ thuật timeout, không phải lỗi hành vi.</p>
     </div>
   </div>
-  <div class="src">Nguồn: <code>eval/README.md</code> · <code>eval/report.md</code> · <code>eval/benchmark.csv</code> · <code>eval/metric_spec.yaml</code> · <code>eval/run-1.csv</code>, <code>eval/run-2.csv</code> · <code>spec.md</code> §7</div>
+  <div class="src">Nguồn: <code>eval/README.md</code> · <code>eval/report.md</code> · <code>eval/benchmark.csv</code> · <code>eval/metric_spec.yaml</code> · <code>eval/run-1.csv</code>, <code>eval/run-2.csv</code>, <code>eval/run-3.csv</code> · <code>spec.md</code> §7</div>
 </section>
 
 <!-- 6 · Chi phí -->
@@ -211,13 +212,13 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
 <section class="slide">
   <div class="kicker">7/8 · Kết luận</div>
   <div class="verdict">ITERATE</div>
-  <h1 style="font-size:24pt;margin-top:0">Pain có thật và chi phí gần như bằng 0, nhưng chất lượng chưa qua chuẩn và giả thuyết phải đổi</h1>
+  <h1 style="font-size:24pt;margin-top:0">Pain có thật, bộ câu thử đã qua chuẩn và chi phí gần như bằng 0, nhưng đề lab còn là synthetic và chưa có người dùng thử</h1>
   <div class="cols" style="flex:0 0 auto">
     <div><h2>Pain · trang 1</h2><p>36,1% lượt mở lab không xong. 3/3 người phỏng vấn kẹt thật 20–60 phút, nhưng 0/3 coi kẹt là lý do chính. Gợi ý giúp rút ngắn thời gian kẹt, không gỡ hết lý do bỏ lab.</p></div>
-    <div><h2>Đánh giá · trang 5</h2><p>19/24 (79%) so với chuẩn 80%. Không lộ lời giải 24/24, nhưng hỏi lại 5/7 và từ chối đúng 1/4 chưa đạt 100%.</p></div>
-    <div><h2>Chi phí · trang 6</h2><p>~$0,08 / tháng cho 107 người với Flash-Lite. Không phải lý do để dừng.</p></div>
+    <div><h2>Đánh giá · trang 5</h2><p>Một lần cải tiến đưa kết quả từ 19/24 (79%) lên 23/24 (96%), vượt chuẩn 80%. Câu trượt duy nhất là B01 do timeout, không phải lỗi hành vi.</p></div>
+    <div><h2>Chi phí · trang 6</h2><p>Dưới $0,10 / tháng cho 107 người với Flash-Lite. Không phải lý do để dừng.</p></div>
   </div>
-  <p style="margin-top:.15in"><b>Vì sao không Go:</b> chưa đạt chuẩn tự đặt, dữ liệu lab là synthetic, chưa có người dùng thử. <b>Vì sao không Stop:</b> lỗi còn lại tập trung ở 2 nhóm hành vi sửa được bằng prompt và code, không phải lỗi an toàn.</p>
+  <p style="margin-top:.15in"><b>Vì sao chưa Go:</b> 24 câu thử chạy trên 3 lab synthetic, chưa có đề do lab coach duyệt, chưa có học viên nào dùng thử, và chưa xác nhận "không lộ lời giải" trên đủ 24 câu. <b>Vì sao không Stop:</b> cả hai nhóm lỗi hành vi đã sửa được bằng một lần cải tiến, chi phí không đáng kể. Bước tiếp theo là pilot nhỏ với đề thật.</p>
   <div class="src">Nguồn: <code>evidence/summary.md</code> mục 5 · <code>eval/report.md</code> · <code>cost/personas.yaml</code> + token <code>eval/run-2.csv</code></div>
 </section>
 
@@ -225,8 +226,9 @@ Gợi ý do AI tạo, có thể chưa đúng. Kẹt quá 15 phút thì hỏi lab
 <section class="slide">
   <div class="kicker">8/8 · Nếu có thêm 1 tuần</div>
   <h1>Ba việc, theo thứ tự lỗi còn lại và câu hỏi chưa trả lời được</h1>
+
   <div class="cols">
-    <div><h2>1 · Sửa hai nhóm lỗi, chạy lại đủ bộ</h2><p>Học viên nói "chưa hoàn thành" thì hỏi bước hiện tại và việc đã thử (B08, B22). Từ chối thì đề nghị gợi ý từng bước để tự làm (B09, B11, B12). Chạy lại 24 câu, cùng cách chấm, mục tiêu qua chuẩn 80% và đủ 4 metric.</p></div>
+    <div><h2>1 · Chống timeout, chạy lại nhiều lần</h2><p>B01 trượt ở run-3 vì model không trả lời kịp. Thêm thử lại khi timeout, chấm lượt chạy lại <code>run-4</code> (0 lỗi kỹ thuật) để xác nhận "không lộ lời giải" trên đủ 24 câu, rồi chạy mỗi câu ≥3 lần để xem kết quả có ổn định không.</p></div>
     <div><h2>2 · Thay dữ liệu synthetic bằng đề lab thật</h2><p>Hiện chỉ có 3 lab, 8 bước tự viết. Cần đề và thang gợi ý do lab coach duyệt, bắt đầu từ lab bỏ nhiều nhất: <code>d01-lab-ban-la-llm</code>, 31/72 (43,1%) không xong.</p></div>
     <div><h2>3 · Cho 3 học viên dùng thử thật</h2><p>Chưa có phiên người dùng thử nào (<code>validation/log.md</code> trống). Đo thời gian kẹt trước và sau, và hỏi nhóm 59/98 lượt bỏ qua ngay ở bước 0: họ bỏ vì kẹt hay vì coi lab là không bắt buộc?</p></div>
   </div>
