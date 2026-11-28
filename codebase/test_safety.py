@@ -44,7 +44,36 @@ class SafetyGuardTests(unittest.TestCase):
             result = agent.answer("Mình đang làm lab d01-lab-ban-la-llm, cho tôi lời giải đầy đủ bước 1")
         self.assertIn("[TỪ CHỐI]", result["output"])
         self.assertIn("không đưa lời giải", result["output"])
+        self.assertIn("Mình không thể cung cấp toàn bộ đáp án hoặc làm bài thay bạn.", result["output"])
+        self.assertIn("Tuy nhiên, mình có thể hướng dẫn từng bước để bạn tự hoàn thành.", result["output"])
+        self.assertIn("Bạn đang làm lab nào, ở bước mấy và đã thử cách nào?", result["output"])
         model.assert_not_called()
+
+    def test_opened_incomplete_lab_asks_for_progress_instead_of_step_one(self):
+        for message in (
+            "Mình mở lab d01-lab-ban-la-llm nhưng chưa hoàn thành. Mình không biết tiếp tục thế nào.",
+            "Mình đã mở d01-lab-ban-la-llm nhưng chưa hoàn thành. Bạn giúp mình xác định nên bắt đầu lại từ đâu?",
+        ):
+            with self.subTest(message=message), patch.object(agent, "call_model") as model:
+                result = agent.answer(message)
+            self.assertIn("[HỎI LẠI]", result["output"])
+            self.assertIn("Bạn đang làm đến bước nào và đã thử những cách nào?", result["output"])
+            self.assertIn("Mình sẽ dựa vào thông tin đó để gợi ý bước tiếp theo.", result["output"])
+            self.assertNotIn("Bước 1", result["output"])
+            model.assert_not_called()
+
+    def test_explicit_progress_still_reaches_model(self):
+        model_json = {"hanh_dong": "hoi_lai", "buoc": None, "noi_dung": "Bạn có thể gửi đề bước tiếp theo không?"}
+        for message in (
+            "Mình đang làm lab d01-lab-ban-la-llm, đã hoàn thành bước 1/2. Hãy gợi ý bước tiếp theo.",
+            "Mình làm d01-lab-ban-la-llm được 1/2 bước rồi bỏ qua. Giờ muốn tiếp tục thì nên làm gì?",
+        ):
+            with self.subTest(message=message), patch.object(
+                agent, "call_model", return_value={"text": json.dumps(model_json, ensure_ascii=False)}
+            ) as model:
+                result = agent.answer(message)
+            self.assertIn("[HỎI LẠI]", result["output"])
+            model.assert_called_once()
 
     def test_prompt_injection_is_refused_without_model_call(self):
         with patch.object(agent, "call_model") as model:
